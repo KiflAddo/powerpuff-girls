@@ -42,6 +42,8 @@ class Grid():
         self.add_houses()
         self.add_batteries()
 
+        self.setup_plot()
+        self.visualize()
 
     def add_houses(self):
         for house in self.house_data:
@@ -59,6 +61,7 @@ class Grid():
             capacity = split_data[2]
             self.batteries.append(Battery(pos_x, pos_y, capacity))
 
+
     def count_objects(self):
         houses = len(self.houses)
         batteries = len(self.batteries)
@@ -66,8 +69,47 @@ class Grid():
         return count
 
     def visualize(self):
+        # plt.figure(figsize=(50, 50))
+        self.ax1.axis([0, 60, 0, 60])
 
+        # plot houses
+        x_pos_list = []
+        y_pos_list = []
 
+        for house in self.houses:
+            x_pos_list.append(house.pos_x)
+            y_pos_list.append(house.pos_y)
+
+        # plot batteries
+        x_pos_list_bat = []
+        y_pos_list_bat = []
+        colour_bat = []
+
+        for battery in self.batteries:
+            x_pos_list_bat.append(battery.pos_x)
+            y_pos_list_bat.append(battery.pos_y)
+            colour_bat.append('r')
+
+        # print(x_pos_list)
+        # print(y_pos_list)
+        print(x_pos_list_bat)
+        print(y_pos_list_bat)
+
+        # print(x_pos_list)
+        self.ax1.scatter(x_pos_list, y_pos_list)
+        self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
+        plt.show()
+
+        # pass
+
+    def setup_plot(self):
+        """
+        Sets up the plot
+        """
+        self.fig, self.ax1 = plt.subplots(1)
+        self.ax1.set_aspect('equal')
+        self.ax1.axes.get_xaxis().set_visible(True)
+        self.ax1.axes.get_yaxis().set_visible(True)
 
 
 
