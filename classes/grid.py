@@ -1,6 +1,6 @@
-from classes.house_class import House
-from classes.battery_class import Battery
-from classes.cables_class import Cables
+from classes.house import House
+from classes.battery import Battery
+from classes.cables import Cables
 from pprint import pprint
 import random
 
