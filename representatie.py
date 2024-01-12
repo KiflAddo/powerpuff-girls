@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from pprint import pprint
 import re
+import classes.house_class
 
 def access_data(file_name):
     data = []
@@ -43,8 +44,10 @@ class Grid():
         self.add_houses()
         self.add_batteries()
 
-        self.setup_plot()
-        self.visualize()
+        # self.setup_plot()
+        # self.visualize()
+
+        self.output()
 
     def add_houses(self):
         for house in self.house_data:
@@ -71,52 +74,39 @@ class Grid():
         return count
 
     def visualize(self):
-        # plt.figure(figsize=(50, 50))
-        #{value for value in variable}self.ax1.axis([0, 50, 0, 50])
-
-        # plot houses
+        """
+        Plotting the batteries and houses in a grid
+        """
         x_pos_list = []
         y_pos_list = []
 
+        # Append x-coordinates and y-coordinates of houses to a list
         for house in self.houses:
             x_pos_list.append(int(house.pos_x))
             y_pos_list.append(int(house.pos_y))
 
-        # plot batteries
+
         x_pos_list_bat = []
         y_pos_list_bat = []
         colour_bat = []
 
+        # Append x-coordinates and y-coordinates of batteries to a list
         for battery in self.batteries:
             x_pos_list_bat.append(int(battery.pos_x))
             y_pos_list_bat.append(int(battery.pos_y))
             colour_bat.append('r')
 
-        # print(x_pos_list)
-        # print(y_pos_list)
-        # print(x_pos_list_bat)
-        # print(y_pos_list_bat)
-
-        # print(x_pos_list)
+        # Plot houses and batteries
         self.ax1.scatter(x_pos_list, y_pos_list)
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
 
+        # Initialize xticks and yticks for the grid
         plt.xticks(list(range(0,51)))
         plt.yticks(list(range(0,51)))
-        
-        # x_ticks = [i * 10 for i in list(range(0,6))]
-        # print(x_ticks)
 
-
-        # plt.setp(self.ax1.get_xticklabels(), visible=False)
-        # plt.setp(self.ax1.get_xticklabels()[::10], visible=True)
-        # plt.set_xticks(labels=x_ticks)
-
+        # Set grid
         self.ax1.grid()
-        # self.ax1.minorticks_on()
-        # plt.tight_layout()
         plt.show()
-
 
 
     def setup_plot(self):
@@ -124,12 +114,59 @@ class Grid():
         Sets up the plot
         """
         self.fig, self.ax1 = plt.subplots(1)
-        # self.ax1.set_aspect('equal')
-        # self.ax1.axes.get_xaxis().set_visible(True)
-        # self.ax1.axes.get_yaxis().set_visible(True)
+
+    def output(self):
+        data = {}
+
+        # Loop over batteries
+        for battery in self.batteries:
+            coord = []
+            pos_x_battery = str(battery.pos_x)
+            pos_y_battery = str(battery.pos_y)
+
+            coord.append(pos_x_battery)
+            coord.append(pos_y_battery)
+
+            # Save the coordinate of the battery, seperated by a comma
+            pos_battery = ','.join(coord)
+
+            # Save the coordinate of the battery to the key 'location' (string)
+            data['location'] = pos_battery
+
+            # Save the capacity of the battery to the key 'capacity' (float)
+            data['capacity'] = battery.capacity
+
+            # Create a key 'houses' with an exmpty string as value
+            data['houses'] = []
 
 
+            for house, cable in self.houses_and_cables.items():
+                house_data = {}
 
+                coord_house = []
+                pos_x_house = str(house.pos_x)
+                pos_y_house = str(house.pos_y)
+
+                coord_house.append(pos_x_house)
+                coord_house.append(pos_y_house)
+
+                # Save the coordinate of the house, seperated by a comma
+                pos_house = ','.join(coord_house)
+
+                # Save the coordinate of the house to the key 'location' (string)
+                house_data['location'] = pos_house
+
+                # Save the capacity of the battery to the key 'output' (float)
+                house_data['output'] = house.capacity
+
+                # 
+                house_data['cables'] = cable.coordinates_list
+
+                data['houses'].append(house_data)
+
+            pprint(data)
+
+            break
 
 
 if __name__ == "__main__":
