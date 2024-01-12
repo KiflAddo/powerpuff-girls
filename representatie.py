@@ -26,9 +26,9 @@ def access_data(file_name):
 
 
 if __name__ == "__main__":
-    batteries = access_data('Huizen&Batterijen/test_data/test_batteries.csv')
+    batteries = access_data('huizen_batterijen/test_data/test_batteries.csv')
 
-    houses = access_data('Huizen&Batterijen/test_data/test_houses.csv')
+    houses = access_data('huizen_batterijen/test_data/test_houses.csv')
 
     true_grid = Grid(houses, batteries)
 
