@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from pprint import pprint
+import re
 
 def access_data(file_name):
     data = []
@@ -55,7 +56,8 @@ class Grid():
 
     def add_batteries(self):
         for battery in self.battery_data:
-            split_data = battery.split(',')
+            true_battery_data = battery.replace('"', '')
+            split_data = true_battery_data.split(',')
             pos_x = split_data[0]
             pos_y = split_data[1]
             capacity = split_data[2]
@@ -70,15 +72,15 @@ class Grid():
 
     def visualize(self):
         # plt.figure(figsize=(50, 50))
-        self.ax1.axis([0, 60, 0, 60])
+        #{value for value in variable}self.ax1.axis([0, 50, 0, 50])
 
         # plot houses
         x_pos_list = []
         y_pos_list = []
 
         for house in self.houses:
-            x_pos_list.append(house.pos_x)
-            y_pos_list.append(house.pos_y)
+            x_pos_list.append(int(house.pos_x))
+            y_pos_list.append(int(house.pos_y))
 
         # plot batteries
         x_pos_list_bat = []
@@ -86,30 +88,45 @@ class Grid():
         colour_bat = []
 
         for battery in self.batteries:
-            x_pos_list_bat.append(battery.pos_x)
-            y_pos_list_bat.append(battery.pos_y)
+            x_pos_list_bat.append(int(battery.pos_x))
+            y_pos_list_bat.append(int(battery.pos_y))
             colour_bat.append('r')
 
         # print(x_pos_list)
         # print(y_pos_list)
-        print(x_pos_list_bat)
-        print(y_pos_list_bat)
+        # print(x_pos_list_bat)
+        # print(y_pos_list_bat)
 
         # print(x_pos_list)
         self.ax1.scatter(x_pos_list, y_pos_list)
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
+
+        plt.xticks(list(range(0,51)))
+        plt.yticks(list(range(0,51)))
+        
+        # x_ticks = [i * 10 for i in list(range(0,6))]
+        # print(x_ticks)
+
+
+        # plt.setp(self.ax1.get_xticklabels(), visible=False)
+        # plt.setp(self.ax1.get_xticklabels()[::10], visible=True)
+        # plt.set_xticks(labels=x_ticks)
+
+        self.ax1.grid()
+        # self.ax1.minorticks_on()
+        # plt.tight_layout()
         plt.show()
 
-        # pass
+
 
     def setup_plot(self):
         """
         Sets up the plot
         """
         self.fig, self.ax1 = plt.subplots(1)
-        self.ax1.set_aspect('equal')
-        self.ax1.axes.get_xaxis().set_visible(True)
-        self.ax1.axes.get_yaxis().set_visible(True)
+        # self.ax1.set_aspect('equal')
+        # self.ax1.axes.get_xaxis().set_visible(True)
+        # self.ax1.axes.get_yaxis().set_visible(True)
 
 
 
