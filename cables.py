@@ -22,87 +22,102 @@ def access_data(file_name):
     return data
 
 class Battery():
-    def __init__(self, pos_x, pos_y, capacity):
+    def __init__(self, pos_x, pos_y, pos_x_y capacity):
         self.pos_x = pos_x
         self.pos_y = pos_y
+        self.pos_x_y = pos_x_y
         self.capacity = capacity
 
 
 class House():
-    def __init__(self, pos_x, pos_y, capacity):
+    def __init__(self, pos_x, pos_y, pos_x_y, capacity):
         self.pos_x = pos_x
         self.pos_y = pos_y
+        self.pos_x_y = pos_x_y
         self.capacity = capacity
 
 
 class Cables():
+    '''class for cables'''
     def __init__(self):
         self.coordinates_list = []
+        self.connected = False
 
+class Grid():
+    '''Grid with houses and cables as dict. Batteries will be put in a list'''
 
-lass Grid():
     def __init__(self, house_data, battery_data):
         self.house_data = house_data
         self.battery_data = battery_data
-        self.houses = []
+
+        # house = key, cables = value as list of coordinates
+        self.houses_and_cables = {}
         self.batteries = []
         self.cables_list = []
-        self.add_houses()
+        self.add_houses_and_cables()
         self.add_batteries()
 
 
+    def add_houses_and_cables(self):
+        '''get the coordinate and capacity of the house
+        save the house with it's cable in a the houses_and_cables dict'''
 
-    def add_houses(self):
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = split_data[0]
             pos_y = split_data[1]
+
+            # make it one coordinate
+            pos_x_y = (pos_x, pos_y)
             capacity = split_data[2]
-            self.houses.append(House(pos_x, pos_y, capacity))
+
+            # cables as value for the house as key in dict
+            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables()
+
 
     def add_batteries(self):
+        '''get the coordinate and capacity of the battery'''
+
         for battery in self.battery_data:
             split_data = battery.split(',')
             pos_x = split_data[0]
             pos_y = split_data[1]
+
+            # make it one coordinate
+            pos_x_y = (pos_x, pos_y)
             capacity = split_data[2]
-            self.batteries.append(Battery(pos_x, pos_y, capacity))
-
-    def add_cables(self):
-        for x in range(len(self.houses)):
-            self.cables_list.append(Cables)
+            self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
 
-    def coordinates(self):
+    def cable_coordinates(self):
+        '''generates random coordinates as a cable'''
 
-        for x in range(pos_x_bat, pos_x_house):
-            x += 1
-            for y in range(pos_y_bat, pos_y_house):
-                y += 1
-                coordinate = (x, y)
-                cable.coordinate_list.append(coordinate)
+        for house, cable in self.houses_and_cables.items():
+            for x in range(10):
+                coordinate = (random.randint(0, 10), random.randint(0, 10))
+                cable.coordinates_list.append(coordinate)
+            print(cable.coordinates_list)
+
 
     def count_objects(self):
-        houses = len(self.houses)
+        houses = len(self.houses_and_cables)
         batteries = len(self.batteries)
         count = (houses, batteries)
+
         return count
 
-
-    def visualize(self):
-
-
-
-
-
+    def connected(self):
+        '''check if the cable is connected'''
+        pass
 
 
 
 if __name__ == "__main__":
-    batteries = access_data('district-1_batteries.csv')
+    batteries = access_data('test_batteries.csv')
 
-    houses = access_data('district-1_houses.csv')
+    houses = access_data('test_houses.csv')
 
     true_grid = Grid(houses, batteries)
 
     print(true_grid.count_objects())
+    true_grid.cable_coordinates()
