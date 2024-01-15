@@ -3,6 +3,7 @@ from classes.battery import Battery
 from classes.cables import Cables
 from pprint import pprint
 import random
+import matplotlib.pyplot as plt
 
 class Grid():
     '''Grid with houses and cables as dict. Batteries will be put in a list'''
@@ -18,6 +19,9 @@ class Grid():
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
+
+        self.setup_plot()
+        self.visualize()
 
 
 
@@ -42,13 +46,15 @@ class Grid():
         '''get the coordinate and capacity of the battery'''
 
         for battery in self.battery_data:
+
             split_data = battery.split(',')
-            pos_x = split_data[0]
-            pos_y = split_data[1]
+            true_data = [data.strip('"') for data in split_data]
+            pos_x = true_data[0]
+            pos_y = true_data[1]
 
             # make it one coordinate
             pos_x_y = (pos_x, pos_y)
-            capacity = split_data[2]
+            capacity = true_data[2]
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
 
@@ -92,7 +98,47 @@ class Grid():
         # add the costs together
         self.costs = cable_cost + battery_cost
 
+    def visualize(self):
+        """
+        Plotting the batteries and houses in a grid
+        """
+        x_pos_list = []
+        y_pos_list = []
 
+        # Append x-coordinates and y-coordinates of houses to a list
+        for house in self.houses_and_cables:
+            x_pos_list.append(int(house.pos_x))
+            y_pos_list.append(int(house.pos_y))
+
+
+        x_pos_list_bat = []
+        y_pos_list_bat = []
+        colour_bat = []
+
+        # Append x-coordinates and y-coordinates of batteries to a list
+        for battery in self.batteries:
+            x_pos_list_bat.append(int(battery.pos_x))
+            y_pos_list_bat.append(int(battery.pos_y))
+            colour_bat.append('r')
+
+        # Plot houses and batteries
+        self.ax1.scatter(x_pos_list, y_pos_list)
+        self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
+
+        # Initialize xticks and yticks for the grid
+        plt.xticks(list(range(0,51)))
+        plt.yticks(list(range(0,51)))
+
+        # Set grid
+        self.ax1.grid()
+        plt.show()
+
+
+    def setup_plot(self):
+        """
+        Sets up the plot
+        """
+        self.fig, self.ax1 = plt.subplots(1)
 
 
     def output(self):
