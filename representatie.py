@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     true_grid = Grid(houses, batteries)
 
-    print(true_grid.count_objects())
-    true_grid.cable_coordinates()
+    # print(true_grid.count_objects())
+    true_grid.is_connected()
     true_grid.calculate_costs()
     true_grid.output()

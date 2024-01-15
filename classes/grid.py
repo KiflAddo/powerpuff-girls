@@ -19,7 +19,7 @@ class Grid():
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
-        self.cable_coordinates()
+        # self.cable_coordinates()
 
         self.setup_plot()
         self.visualize()
@@ -57,12 +57,12 @@ class Grid():
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
 
-    def cable_coordinates(self):
-        '''generates random coordinates as a cable'''
-        for house, cable in self.houses_and_cables.items():
-            for x in range(10):
-                coordinate = (random.randint(0, 10), random.randint(0, 10))
-                cable.coordinates_list.append(coordinate)
+    # def cable_coordinates(self):
+    #     '''generates random coordinates as a cable'''
+    #     for house, cable in self.houses_and_cables.items():
+    #         for x in range(10):
+    #             coordinate = (random.randint(0, 10), random.randint(0, 10))
+    #             cable.coordinates_list.append(coordinate)
 
 
     def count_objects(self):
@@ -73,9 +73,18 @@ class Grid():
 
         return count
 
-    def connected(self):
+    def is_connected(self):
         '''check if the cable is connected'''
-        pass
+
+        for house, cable in self.houses_and_cables.items():
+
+            while cable.connected == False:
+                cable.step(house.pos_x, house.pos_y)
+
+                # chack if in battery coordinates
+                if cable.coordinates_list[-1] in self.batteries.battery.pos_x_y:
+                    cable.connected = True
+
 
     def calculate_costs(self):
         '''function to calculate the costs'''

@@ -7,26 +7,35 @@ class Cables():
         self.connected = False
 
     def step(self, x, y):
+        x = int(x)
+        y = int(y)
 
         direction = random.randint(1, 4)
 
-        last_point_x = self.coordinates_list[len(coordinates_list)][0]
-        last_point_y = self.coordinates_list[len(coordinates_list)][1]
+        if self.coordinates_list:
+            last_point_x = self.coordinates_list[-1][0]
+            last_point_y = self.coordinates_list[-1][1]
+        else:
+            last_point_x = x
+            last_point_y = y
 
         #Right
-        if direction == 1 and x < 50 and last_point_x != x + 1:
+        if direction == 1 and x < 10 and last_point_x != x + 1:
             x = x + 1
             y = y
+
         #Left
-        if direction == 2 and x > 0 and last_point_x != x - 1:
+        elif direction == 2 and x > 0 and last_point_x != x - 1:
             x = x - 1
             y = y
+
         #Up
-        if direction == 3 and y < 50 and last_point_y != y + 1:
+        elif direction == 3 and y < 10 and last_point_y != y + 1:
             x = x
             y = y + 1
+
         #Down
-        if direction == 4 and y > 0 and last_point_y != y - 1:
+        elif direction == 4 and y > 0 and last_point_y != y - 1:
             x = x
             y = y - 1
 
