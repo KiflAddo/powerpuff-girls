@@ -19,6 +19,7 @@ class Grid():
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
+        self.cable_coordinates()
 
         self.setup_plot()
         self.visualize()
@@ -28,7 +29,6 @@ class Grid():
     def add_houses_and_cables(self):
         '''get the coordinate and capacity of the house
         save the house with it's cable in a the houses_and_cables dict'''
-
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = split_data[0]
@@ -44,7 +44,6 @@ class Grid():
 
     def add_batteries(self):
         '''get the coordinate and capacity of the battery'''
-
         for battery in self.battery_data:
 
             split_data = battery.split(',')
@@ -60,15 +59,14 @@ class Grid():
 
     def cable_coordinates(self):
         '''generates random coordinates as a cable'''
-
         for house, cable in self.houses_and_cables.items():
             for x in range(10):
                 coordinate = (random.randint(0, 10), random.randint(0, 10))
                 cable.coordinates_list.append(coordinate)
-            # print(cable.coordinates_list)
 
 
     def count_objects(self):
+        """Counting the number of objects"""
         houses = len(self.houses_and_cables)
         batteries = len(self.batteries)
         count = (houses, batteries)
@@ -99,9 +97,8 @@ class Grid():
         self.costs = cable_cost + battery_cost
 
     def visualize(self):
-        """
-        Plotting the batteries and houses in a grid
-        """
+        '''Plots the houses as blue squares, the batteries as red circles and
+        the cables connecting the two as green lines'''
         x_pos_list = []
         y_pos_list = []
 
@@ -122,7 +119,7 @@ class Grid():
             colour_bat.append('r')
 
         # Plot houses and batteries
-        self.ax1.scatter(x_pos_list, y_pos_list)
+        self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
 
         # Initialize xticks and yticks for the grid
@@ -131,13 +128,31 @@ class Grid():
 
         # Set grid
         self.ax1.grid()
+
+        # Loop over houses and cables
+        for house, cable in self.houses_and_cables.items():
+            x_coord_cable = []
+            y_coord_cable = []
+
+            # Loop over coordinates of the cables of one house
+            for coord in cable.coordinates_list:
+
+                # Save the x_coordinate of one cable section to the list
+                # x_coord_cable
+                x_coord_cable.append(coord[0])
+
+                # Save the y_coordinate of one cable section to the list
+                # y_coord_cable
+                y_coord_cable.append(coord[1])
+
+            # Plot the cable connection the house to a battery
+            plt.plot(x_coord_cable, y_coord_cable, 'g-')
+
         plt.show()
 
 
     def setup_plot(self):
-        """
-        Sets up the plot
-        """
+        '''Sets up the plot'''
         self.fig, self.ax1 = plt.subplots(1)
 
 
@@ -169,7 +184,7 @@ class Grid():
             # Create a key 'houses' with an exmpty string as value
             data['houses'] = []
 
-
+            # Loop over houses and cables
             for house, cable in self.houses_and_cables.items():
                 house_data = {}
 
@@ -189,13 +204,14 @@ class Grid():
                 # Save the capacity of the battery to the key 'output' (float)
                 house_data['output'] = house.capacity
 
-                #
+                # Save the list containing the coordinates of the cables to the
+                # key 'cables' (list)
                 house_data['cables'] = cable.coordinates_list
 
+                # Save the dictionary containing the information on the houses
+                # to the 'houses' key in the dictionary containing all the data
                 data['houses'].append(house_data)
 
-            # pprint(data)
+
             true_data.append(data)
             pprint(true_data)
-
-            break
