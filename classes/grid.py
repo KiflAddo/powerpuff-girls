@@ -74,12 +74,11 @@ class Grid():
 
             while cable.connected == False:
                 cable.step()
-                print(cable.coordinates_list[-1])
 
                 # chack if in battery coordinates
                 for pos_capacity in self.batteries.values():
                     if pos_capacity[0] == cable.coordinates_list[-1]:
-                        cable.connected = True
+                        cable.connected =  True
 
 
 
