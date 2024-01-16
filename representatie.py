@@ -36,3 +36,5 @@ if __name__ == "__main__":
     true_grid.is_connected()
     true_grid.calculate_costs()
     true_grid.output()
+    true_grid.setup_plot()
+    true_grid.visualize()
