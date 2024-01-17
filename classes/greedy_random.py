@@ -1,9 +1,17 @@
+import matplotlib.pyplot as plt
+from pprint import pprint
+import re
+from classes.house import House
+from classes.battery import Battery
+from classes.cables import Cables
+from classes.grid import Grid
+
 
 
 class Greedy_Random():
-    '''Random greedy algoritme'''
+    '''Random greedy algorithm'''
 
-    def __init__(self, x_house, y_house, x_battery, y_battery):
+    def __init__(self, x_house, y_house, x_battery, y_battery, grid):
         self.coordinates_list = []
         # pos_x_y = x, y
         self.x_house = x_house
@@ -13,6 +21,7 @@ class Greedy_Random():
 
         # self.coordinates.append(pos_x_y)
         self.connected = False
+        self.grid = grid
 
     def step(self):
         # Determine how many steps we have to take on each axis. Negative means to
@@ -60,3 +69,34 @@ class Greedy_Random():
             self.coordinates.append((pos_h_x, pos_h_y))
 
         print(self.coordinates)
+
+    def manhattan_distance(self, x1, y1, x2, y2):
+
+        x_distance = abs(x1 - x2)
+        y_distance = abs(y1 - y2)
+
+        total_distance = x_distance + y_distance
+
+        return total_distance
+
+
+    def smallest_distance(self):
+        smallest_dict = {}
+        for house in self.grid.houses_and_cables:
+            distance_dict = {}
+            cum_cap = 0
+            for battery in self.grid.batteries:
+                distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
+                distance_dict[house] = distance
+            while cum_cap < battery.capacity:
+                min_dist_house = min(distance_dict, key=distance_dict.get)
+                cum_cap = cum_cap + min_dist_house.capacity
+
+                if battery not in smallest_dict:
+                    smallest_dict[battery] = []
+
+                else:
+                    smallest_dict[battery].append(min_dist_house)
+
+                del distance_dict[min_dist_house]
+        print(smallest_dict)

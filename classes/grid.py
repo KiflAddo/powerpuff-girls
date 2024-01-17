@@ -22,10 +22,9 @@ class Grid():
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
-        self.cable_coordinates()
 
-        self.setup_plot()
-        self.visualize()
+        # self.setup_plot()
+        # self.visualize()
 
 
 
@@ -34,18 +33,18 @@ class Grid():
         save the house with it's cable in a the houses_and_cables dict'''
         for house in self.house_data:
             split_data = house.split(',')
-            pos_x = split_data[0]
-            pos_y = split_data[1]
+            pos_x = int(split_data[0])
+            pos_y = int(split_data[1])
 
             # make it one coordinate
             pos_x_y = (pos_x, pos_y)
-            capacity = split_data[2]
+            capacity = float(split_data[2])
 
             # make a set of all house locations to prevent crossing house with cable
             self.house_locations.add(pos_x_y)
 
             # make a dict with cables as value for the house as key
-            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables()
+            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
 
 
 
@@ -56,12 +55,12 @@ class Grid():
 
             split_data = battery.split(',')
             true_data = [data.strip('"') for data in split_data]
-            pos_x = true_data[0]
-            pos_y = true_data[1]
+            pos_x = int(true_data[0])
+            pos_y = int(true_data[1])
 
             # make it one coordinate
             pos_x_y = (pos_x, pos_y)
-            capacity = true_data[2]
+            capacity = float(true_data[2])
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
 

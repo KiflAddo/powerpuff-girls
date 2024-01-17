@@ -23,18 +23,3 @@ def access_data(file_name):
         data.append(line)
 
     return data
-
-
-if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/test_data/test_batteries.csv')
-
-    houses = access_data('huizen_batterijen/test_data/test_houses.csv')
-
-    true_grid = Grid(houses, batteries)
-
-    # print(true_grid.count_objects())
-    true_grid.is_connected()
-    true_grid.calculate_costs()
-    # true_grid.output()
-    true_grid.setup_plot()
-    true_grid.visualize()
