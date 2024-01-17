@@ -19,3 +19,8 @@ if __name__ == "__main__":
     algo1 = Greedy_Random(10, 10, 10, 10, grid1)
 
     algo1.smallest_distance()
+
+    algo1.step()
+    grid1.calculate_costs()
+    # grid1.visualize()
+    grid1.output()

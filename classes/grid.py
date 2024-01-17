@@ -63,7 +63,9 @@ class Grid():
             capacity = float(true_data[2])
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
-
+    def is_capacity_full(self, battery):
+        if battery.used_capacity >= battery.capacity:
+            battery.full = True
 
     def is_connected(self):
         '''check if the cable is connected'''
