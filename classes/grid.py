@@ -12,6 +12,9 @@ class Grid():
         self.house_data = house_data
         self.battery_data = battery_data
 
+        # all house locations (to prevemt crossing later)
+        self.house_locations = set()
+
         # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
         self.batteries = []
@@ -38,8 +41,13 @@ class Grid():
             pos_x_y = (pos_x, pos_y)
             capacity = split_data[2]
 
-            # cables as value for the house as key in dict
+            # make a set of all house locations to prevent crossing house with cable
+            self.house_locations.add(pos_x_y)
+
+            # make a dict with cables as value for the house as key
             self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables()
+
+
 
 
     def add_batteries(self):
@@ -56,23 +64,6 @@ class Grid():
             capacity = true_data[2]
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
-
-    def manhattan_distance(self, x1, x2, y1, y2):
-
-        x_distance = abs(x1 - x2)
-        y_distance = abs(y1 - y2)
-
-        total_distance = x_distance + y_distance
-
-        return total_distance
-
-
-    def smallest_distance(self):
-        smallest_dict = {}
-        for battery in self.batteries:
-            cum_cap = 0
-            while cum_cap < battery.capacity:
-                pass
 
 
     def is_connected(self):
