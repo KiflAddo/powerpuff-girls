@@ -9,17 +9,12 @@ class Cables():
         self.connected = False
 
     def step(self):
-        # x = int(x)
-        # y = int(y)
 
         direction = random.randint(1, 4)
 
-        # if self.coordinates_list:
         last_point_x = self.coordinates_list[-1][0]
         last_point_y = self.coordinates_list[-1][1]
-        # else:
-        #     last_point_x = x
-        #     last_point_y = y
+
 
         #Right
         if direction == 1 and last_point_x < 10 and last_point_x != last_point_x + 1:

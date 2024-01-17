@@ -79,11 +79,13 @@ class Grid():
         for house, cable in self.houses_and_cables.items():
 
             while cable.connected == False:
-                cable.step(house.pos_x, house.pos_y)
+                cable.step()
 
                 # chack if in battery coordinates
-                if cable.coordinates_list[-1] in self.batteries.battery.pos_x_y:
-                    cable.connected = True
+                for pos_capacity in self.batteries.values():
+                    if pos_capacity[0] == cable.coordinates_list[-1]:
+                        cable.connected =  True
+
 
 
     def calculate_costs(self):
