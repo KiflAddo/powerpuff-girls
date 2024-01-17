@@ -60,9 +60,29 @@ class Grid():
     # def cable_coordinates(self):
     #     '''generates random coordinates as a cable'''
     #     for house, cable in self.houses_and_cables.items():
-    #         for x in range(10):
+    #         for x in range(10)
     #             coordinate = (random.randint(0, 10), random.randint(0, 10))
     #             cable.coordinates_list.append(coordinate)
+
+    def manhattan_distance(self, x1, x2, y1, y2):
+
+        x_distance = abs(x1 - x2)
+        y_distance = abs(y1 - y2)
+
+        total_distance = x_distance + y_distance
+
+        return total_distance
+
+
+    def smallest_distance(self):
+        smallest_dict = {}
+        for battery in self.batteries:
+            cum_cap = 0
+            while cum_cap < battery.capacity:
+                pass
+
+
+
 
 
     def count_objects(self):
@@ -75,7 +95,7 @@ class Grid():
 
     def is_connected(self):
         '''check if the cable is connected'''
-
+        count = 0
         for house, cable in self.houses_and_cables.items():
 
             while cable.connected == False:
