@@ -57,13 +57,6 @@ class Grid():
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
 
-    # def cable_coordinates(self):
-    #     '''generates random coordinates as a cable'''
-    #     for house, cable in self.houses_and_cables.items():
-    #         for x in range(10)
-    #             coordinate = (random.randint(0, 10), random.randint(0, 10))
-    #             cable.coordinates_list.append(coordinate)
-
     def manhattan_distance(self, x1, x2, y1, y2):
 
         x_distance = abs(x1 - x2)
@@ -82,17 +75,6 @@ class Grid():
                 pass
 
 
-
-
-
-    def count_objects(self):
-        """Counting the number of objects"""
-        houses = len(self.houses_and_cables)
-        batteries = len(self.batteries)
-        count = (houses, batteries)
-
-        return count
-
     def is_connected(self):
         '''check if the cable is connected'''
         count = 0
@@ -105,7 +87,6 @@ class Grid():
                 for pos_capacity in self.batteries.values():
                     if pos_capacity[0] == cable.coordinates_list[-1]:
                         cable.connected =  True
-
 
 
     def calculate_costs(self):
