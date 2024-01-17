@@ -100,3 +100,95 @@ class Greedy_Random():
 
                 del distance_dict[min_dist_house]
         print(smallest_dict)
+
+
+"""OEFEN"""
+
+
+
+class Greedy_Random():
+    '''Random greedy algoritme'''
+
+    def __init__(self, x_house, y_house, x_battery, y_battery, set_houses):
+        self.coordinates_list = []
+        # pos_x_y = x, y
+        self.x_house = x_house
+        self.y_house = y_house
+        self.x_battery = x_battery
+        self.y_battery = y_battery
+        self.set_houses = set_houses
+
+        # self.coordinates.append(pos_x_y)
+        self.connected = False
+
+    def step(self):
+        # Determine how many steps we have to take on each axis. Negative means to
+        # the left, positive means to the right
+        x_steps = self.x_battery - self.x_house
+        y_steps = self.y_battery - self.y_house
+
+        # The starting positions that will be updated
+        cable_x = self.x_house
+        cable_y = self.y_house
+
+        # Counting steps for x and y
+        count_x = 0
+        count_y = 0
+
+        steps_needed = abs(x_steps)+abs(y_steps)
+
+        # Keep taking steps untill the battery is reached
+        while cable_x != self.x_battery and cable_y != self.y_battery:
+
+            # Pick a random direction: 1=along x axis, 2=along y axis
+            direction = random.randint(1, 2)
+
+            if direction == 1 and count_x < abs(x_steps):
+                # Check if the value is positive and if the possible
+                # coordinate is not in the set of house coordinates
+                if x_steps > 0 and (cable_x + 1, cable_y) not in self.set_houses:
+                    cable_x += 1
+                    count_x += 1
+                    self.coordinates.append((cable_x, cable_y))
+
+                # Check if the value is negative and if the possible
+                # coordinate is not in the set of house coordinates
+                elif x_steps < 0 and (cable_x - 1, cable_y) not in self.set_houses:
+                    cable_x -= 1
+                    count_x += 1
+                    self.coordinates.append((cable_x, cable_y))
+
+                # If there is a house in the way, change direction
+                else:
+                    direction = 2
+                    # If we cannot take anymore steps in the y direction, restart
+                    # by resetting count_x and count_y and clear the list with
+                    # coordinates
+                    if count_y == abs(y_steps):
+                        count_x = 0
+                        count_y = 0
+                        self.coordinates.clear()
+
+
+
+            if direction == 2 and count_y < abs(y_steps):
+                # Check if the value is negative or positive
+                if y_steps > 0 and cable_y + 1 not in self.set_houses:
+                    cable_y += 1
+                    count_y += 1
+                    self.coordinates.append((cable_x, cable_y))
+
+                elif y_steps < 0 and cable_y - 1 not in self.set_houses:
+                    cable_y -= 1
+                    count_y += 1
+                    self.coordinates.append((cable_x, cable_y))
+
+                else:
+                    direction = 1
+                    if count_x == abs(x_steps):
+                        count_x = 0
+                        count_y = 0
+                        self.coordinates.clear()
+
+
+        print(self.coordinates)
