@@ -19,7 +19,7 @@ class Grid():
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
-        # self.cable_coordinates()
+        self.cable_coordinates()
 
         self.setup_plot()
         self.visualize()

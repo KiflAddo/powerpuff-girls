@@ -10,10 +10,6 @@ def __init__(self, x_house, y_house, x_battery, y_battery):
     self.connected = False
 
 def step(self):
-    # toch niet nodig denk ik
-    # pos_h = (house.pos_x, house.pos_y)
-    # pos_b = (battery.pos_x, battery.pos_y)
-
     # Determine how many steps we have to take on each axis. Negative means to
     # the left, positive means to the right
     x_steps = self.x_battery - self.x_house
@@ -27,8 +23,10 @@ def step(self):
     count_x = 0
     count_y = 0
 
+    steps_needed = abs(x_steps)+abs(y_steps)
+
     # Take the right amount of steps
-    for steps in range(x_steps+y_steps):
+    while steps_needed > steps_taken:
         # Pick a random direction: 1=along x axis, 2=along y axis
         direction = random.randint(1, 2)
 
@@ -36,19 +34,21 @@ def step(self):
             # Check if the value is negative or positive
             if x_steps > 0:
                 pos_h_x+=1
-            else:
-                pos_h_x-=1
+            elif x_steps < 0:
+                pos_h_x -= 1
 
-            count_x+=1
+            steps_taken += 1
+            count_x += 1
 
         if direction == 2 and count_y < abs(y_steps):
             # Check if the value is negative or positive
             if y_steps > 0:
                 pos_h_y+=1
-            else:
-                pos_h_y-=1
+            elif y_steps < 0:
+                pos_h_y -= 1
 
-            count_y+=1
+            steps_taken += 1
+            count_y += 1
 
         # Save coordinate to list
         self.coordinates.append((pos_h_x, pos_h_y))
