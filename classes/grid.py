@@ -14,26 +14,32 @@ class Grid():
 
         # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
-        self.batteries = {}
+        self.batteries = []
         self.cables_list = []
         self.costs = 0
         self.add_houses_and_cables()
         self.add_batteries()
+        # self.cable_coordinates()
+
+        self.setup_plot()
+        self.visualize()
+
+
 
     def add_houses_and_cables(self):
         '''get the coordinate and capacity of the house
         save the house with it's cable in a the houses_and_cables dict'''
         for house in self.house_data:
             split_data = house.split(',')
-            pos_x = int(split_data[0])
-            pos_y = int(split_data[1])
+            pos_x = split_data[0]
+            pos_y = split_data[1]
 
             # make it one coordinate
-            pos_x_y = pos_x, pos_y
+            pos_x_y = (pos_x, pos_y)
             capacity = split_data[2]
 
             # cables as value for the house as key in dict
-            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
+            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables()
 
 
     def add_batteries(self):
@@ -42,14 +48,14 @@ class Grid():
 
             split_data = battery.split(',')
             true_data = [data.strip('"') for data in split_data]
-            pos_x = int(true_data[0])
-            pos_y = int(true_data[1])
+            pos_x = true_data[0]
+            pos_y = true_data[1]
 
             # make it one coordinate
-            pos_x_y = pos_x, pos_y
+            pos_x_y = (pos_x, pos_y)
             capacity = true_data[2]
-            self.batteries[Battery(pos_x, pos_y, pos_x_y, capacity)] = pos_x_y, capacity
-        # print(self.batteries.values())
+            self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
+
 
     # def cable_coordinates(self):
     #     '''generates random coordinates as a cable'''
@@ -69,18 +75,15 @@ class Grid():
 
     def is_connected(self):
         '''check if the cable is connected'''
-        count = 0
+
         for house, cable in self.houses_and_cables.items():
 
             while cable.connected == False:
-                cable.step()
-                print(cable.coordinates_list[-1])
+                cable.step(house.pos_x, house.pos_y)
 
                 # chack if in battery coordinates
-                for pos_capacity in self.batteries.values():
-                    if pos_capacity[0] == cable.coordinates_list[-1]:
-                        cable.connected = True
-
+                if cable.coordinates_list[-1] in self.batteries.battery.pos_x_y:
+                    cable.connected = True
 
 
     def calculate_costs(self):
@@ -152,7 +155,7 @@ class Grid():
                 y_coord_cable.append(coord[1])
 
             # Plot the cable connection the house to a battery
-            plt.plot(x_coord_cable, y_coord_cable)
+            plt.plot(x_coord_cable, y_coord_cable, 'g-')
 
         plt.show()
 
