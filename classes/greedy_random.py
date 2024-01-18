@@ -27,6 +27,7 @@ class Greedy_Random():
 
 
     def step(self):
+        count = 0
         for house, battery in self.smallest_dict.items():
 
             # Determine how many steps we have to take on each axis. Negative means to
@@ -97,7 +98,8 @@ class Greedy_Random():
                             count_y = 0
                             self.grid.houses_and_cables.get(house).coordinates_list.clear()
 
-
+            count += 1
+            # print(count)
 
     def manhattan_distance(self, x1, y1, x2, y2):
 
