@@ -10,9 +10,9 @@ from representatie import access_data
 import sys
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen\district_1\district-1_batteries.csv')
+    batteries = access_data('huizen_batterijen\district_3\district-3_batteries.csv')
 
-    houses = access_data('huizen_batterijen\district_1\district-1_houses.csv')
+    houses = access_data('huizen_batterijen\district_3\district-3_houses.csv')
 
     grid1 = Grid(houses, batteries)
 
@@ -22,5 +22,6 @@ if __name__ == "__main__":
 
     algo1.step()
     grid1.calculate_costs()
-    # grid1.visualize()
-    grid1.output()
+    grid1.setup_plot()
+    grid1.visualize()
+    # grid1.output()
