@@ -14,7 +14,7 @@ def experiments(number_of_experiments):
     results = []
     for experiment in range(number_of_experiments):
         grid = Grid(houses, batteries)
-        algorithm = Greedy_Random(10, 10, 10, 10, grid)
+        algorithm = Greedy_Random(grid)
         algorithm.smallest_distance()
         algorithm.step()
         grid.calculate_costs()
@@ -40,16 +40,19 @@ def experiments2(number_of_experiments, algorithm):
     df.to_csv('Results2.csv')
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/district_2/district-2_batteries.csv')
+    batteries = access_data('huizen_batterijen/district_3/district-3_batteries.csv')
 
-    houses = access_data('huizen_batterijen/district_2/district-2_houses.csv')
-    # grid = Grid(houses, batteries)
-    algorithm = Greedy_Random(10, 10, 10, 10, grid)
-
-    # experiments(10)
-    experiments2(10, algorithm)
-
-
-    # grid1.setup_plot()
-    # grid1.visualize()
-    # grid1.output()
+    houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
+    # experiments(100)
+    grid = Grid(houses, batteries)
+    algorithm = Greedy_Random(grid)
+    #
+    # # experiments(10)
+    # # experiments2(10, algorithm)
+    #
+    algorithm.smallest_distance()
+    algorithm.step()
+    grid.calculate_costs()
+    grid.setup_plot()
+    grid.visualize()
+    # grid.output()

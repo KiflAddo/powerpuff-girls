@@ -12,26 +12,21 @@ import random
 class Greedy_Random():
     '''Random greedy algorithm'''
 
-    def __init__(self, x_house, y_house, x_battery, y_battery, grid):
+    def __init__(self, grid):
         self.coordinates_list = []
         self.smallest_dict = {}
-        # pos_x_y = x, y
-        self.x_house = x_house
-        self.y_house = y_house
-        self.x_battery = x_battery
-        self.y_battery = y_battery
 
-        # self.coordinates.append(pos_x_y)
-        self.connected = False
         self.grid = grid
 
 
     def step(self):
+        '''Lies the cable in random steps of 1, starting from a house
+            untill the cable is connected to a battery'''
+
         count = 0
         for house, battery in self.smallest_dict.items():
 
-            # Determine how many steps we have to take on each axis. Negative means to
-            # the left, positive means to the right
+            #Negative means go  left, positive means go right
             x_steps = battery.pos_x - house.pos_x
             y_steps = battery.pos_y - house.pos_y
 
@@ -45,8 +40,6 @@ class Greedy_Random():
 
             steps_needed = abs(x_steps)+abs(y_steps)
 
-            # print(battery.pos_x, battery.pos_y)
-            # print(house.pos_x, house.pos_y)
 
             cable = self.grid.houses_and_cables.get(house)
             cable.coordinates_list.append((cable_x, cable_y))
@@ -56,87 +49,36 @@ class Greedy_Random():
 
                 # Pick a random direction: 1=along x axis, 2=along y axis
                 direction = random.randint(1, 2)
-                # print(direction)
 
 
                 if direction == 1 and count_x < abs(x_steps):
-                    print('a2')
+
                     # Check if the value is positive and if the possible
-                    # coordinate is not in the set of house coordinates
-                    if x_steps > 0 and (cable_x + 1, cable_y) not in self.grid.house_locations:
+                    if x_steps > 0:
                         cable_x += 1
                         count_x += 1
                         cable.coordinates_list.append((cable_x, cable_y))
-                        print('b2')
 
-                    # Check if the value is negative and if the possible
-                    # coordinate is not in the set of house coordinates
-                    elif x_steps < 0 and (cable_x - 1, cable_y) not in self.grid.house_locations:
+                    else:
                         cable_x -= 1
                         count_x += 1
                         cable.coordinates_list.append((cable_x, cable_y))
-                        print('c2')
-
-
-                    # If there is a house in the way, change direction
-                    else:
-                        print('d2')
-                        # direction = 2
-                        # If we cannot take anymore steps in the y direction, restart
-                        # by resetting count_x and count_y and clear the list with
-                        # coordinates
-                        if count_y == abs(y_steps):
-                            count_x = 0
-                            count_y = 0
-                            cable_x = house.pos_x
-                            cable_y = house.pos_y
-                            cable.coordinates_list.clear()
-                            cable.coordinates_list.append((cable_x, cable_y))
-                            print('e2')
-                            # break
-                        else:
-                            direction = 2
-                            print('f2')
-
-
-
 
 
                 if direction == 2 and count_y < abs(y_steps):
+
                     # Check if the value is negative or positive
-                    print('a')
-                    if y_steps > 0 and (cable_x, cable_y + 1) not in self.grid.house_locations:
+                    if y_steps > 0:
                         cable_y += 1
                         count_y += 1
                         cable.coordinates_list.append((cable_x, cable_y))
-                        print('b')
 
-                    elif y_steps < 0 and (cable_x, cable_y - 1) not in self.grid.house_locations:
+                    else:
                         cable_y -= 1
                         count_y += 1
                         cable.coordinates_list.append((cable_x, cable_y))
-                        print('c')
-
-                    else:
-                        direction = 1
-                        print('d')
-                        if count_x == abs(x_steps):
-                            count_x = 0
-                            count_y = 0
-                            cable_x = house.pos_x
-                            cable_y = house.pos_y
-                            cable.coordinates_list.clear()
-                            cable.coordinates_list.append((cable_x, cable_y))
-                            print('e')
-                            # break
-                        # else:
-                        #     direction = 1
 
 
-                print(cable.coordinates_list)
-
-            # count += 1
-            # print(count)
 
     def manhattan_distance(self, x1, y1, x2, y2):
 
@@ -151,7 +93,7 @@ class Greedy_Random():
     def smallest_distance(self):
         ''''Calculates the battery with the smallest distance from a house'''
         count = 0
-        for house in random.shuffle(self.grid.houses_and_cables):
+        for house in self.grid.houses_and_cables:
 
             # dict with house as key and closest battery as value
             distance_dict = {}
