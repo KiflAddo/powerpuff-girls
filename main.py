@@ -26,6 +26,8 @@ def experiments(number_of_experiments):
     df.to_csv('Results1.csv')
 
 def experiments2(number_of_experiments, algorithm):
+    '''Unfinshed version of experiments that takes an algorithm as input'''
+
     results = []
     for experiment in range(number_of_experiments):
         grid = Grid(houses, batteries)
@@ -50,9 +52,9 @@ if __name__ == "__main__":
     # # experiments(10)
     # # experiments2(10, algorithm)
     #
-    algorithm.smallest_distance()
-    algorithm.step()
-    grid.calculate_costs()
-    grid.setup_plot()
-    grid.visualize()
+    # algorithm.smallest_distance()
+    # algorithm.step()
+    # grid.calculate_costs()
+    # grid.setup_plot()
+    # grid.visualize()
     # grid.output()

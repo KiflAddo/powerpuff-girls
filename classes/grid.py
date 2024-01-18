@@ -23,8 +23,6 @@ class Grid():
         self.add_houses_and_cables()
         self.add_batteries()
 
-        # self.setup_plot()
-        # self.visualize()
 
 
 

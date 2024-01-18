@@ -81,7 +81,7 @@ class Greedy_Random():
 
 
     def manhattan_distance(self, x1, y1, x2, y2):
-
+        '''function that calculates the manhatten distance'''
         x_distance = abs(x1 - x2)
         y_distance = abs(y1 - y2)
 
