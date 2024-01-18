@@ -45,7 +45,7 @@ class Greedy_Random():
             steps_needed = abs(x_steps)+abs(y_steps)
 
             # Keep taking steps untill the battery is reached
-            while cable_x != battery.pos_x and cable_y != battery.pos_y:
+            while cable_x != battery.pos_x or cable_y != battery.pos_y:
 
                 # Pick a random direction: 1=along x axis, 2=along y axis
                 direction = random.randint(1, 2)
