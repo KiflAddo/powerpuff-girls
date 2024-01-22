@@ -58,11 +58,12 @@ class Greedy_Random():
                         cable_x += 1
                         count_x += 1
                         cable.coordinates_list.append((cable_x, cable_y))
-
+                        self.grid.all_cable_locations.add((cable_x, cable_y))
                     else:
                         cable_x -= 1
                         count_x += 1
                         cable.coordinates_list.append((cable_x, cable_y))
+                        self.grid.all_cable_locations.add((cable_x, cable_y))
 
 
                 if direction == 2 and count_y < abs(y_steps):
@@ -72,11 +73,13 @@ class Greedy_Random():
                         cable_y += 1
                         count_y += 1
                         cable.coordinates_list.append((cable_x, cable_y))
+                        self.grid.all_cable_locations.add((cable_x, cable_y))
 
                     else:
                         cable_y -= 1
                         count_y += 1
                         cable.coordinates_list.append((cable_x, cable_y))
+                        self.grid.all_cable_locations.add((cable_x, cable_y))
 
 
 
