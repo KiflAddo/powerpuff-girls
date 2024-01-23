@@ -59,13 +59,19 @@ class Greedy_Random():
                     if x_steps > 0:
                         cable_x += 1
                         count_x += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
                     else:
                         cable_x -= 1
                         count_x += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
+                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
+                    if cable_coordinate in self.grid.all_cable_locations:
+                        self.grid.shared_segments += 1
+                    self.grid.all_cable_locations.add(cable_coordinate)
 
                 if direction == 2 and count_y < abs(y_steps):
 
@@ -73,12 +79,19 @@ class Greedy_Random():
                     if y_steps > 0:
                         cable_y += 1
                         count_y += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
                     else:
                         cable_y -= 1
                         count_y += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
+
+                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
+                    if cable_coordinate in self.grid.all_cable_locations:
+                        self.grid.shared_segments += 1
+                    self.grid.all_cable_locations.add(cable_coordinate)
 
 
 
@@ -120,3 +133,17 @@ class Greedy_Random():
         battery_coords = (np.round(kmeans.cluster_centers_)).astype(int)
 
         self.grid.batt_loc.append(battery_coords)
+
+    def run(self, visualize=False, output=False):
+        self.kmeans()
+        self.grid.add_batteries()
+        self.smallest_distance()
+        self.step()
+        self.grid.calculate_costs()
+
+        if visualize == True:
+            self.grid.setup_plot()
+            self.grid.visualize()
+
+        if output == True:
+            self.grid.output()
