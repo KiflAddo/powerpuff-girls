@@ -59,13 +59,19 @@ class Greedy_Random():
                     if x_steps > 0:
                         cable_x += 1
                         count_x += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
                     else:
                         cable_x -= 1
                         count_x += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
+                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
+                    if cable_coordinate in self.grid.all_cable_locations:
+                        self.grid.shared_segments += 1
+                    self.grid.all_cable_locations.add(cable_coordinate)
 
                 if direction == 2 and count_y < abs(y_steps):
 
@@ -73,12 +79,19 @@ class Greedy_Random():
                     if y_steps > 0:
                         cable_y += 1
                         count_y += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
 
                     else:
                         cable_y -= 1
                         count_y += 1
-                        cable.coordinates_list.append((cable_x, cable_y))
+                        cable_coordinate = (cable_x, cable_y)
+                        cable.coordinates_list.append(cable_coordinate)
+
+                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
+                    if cable_coordinate in self.grid.all_cable_locations:
+                        self.grid.shared_segments += 1
+                    self.grid.all_cable_locations.add(cable_coordinate)
 
 
 

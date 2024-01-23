@@ -11,4 +11,3 @@ class Battery():
         self.capacity = capacity
         self.used_capacity = 0
         self.full = False
-        # self.bat_coords = []

@@ -21,8 +21,9 @@ class Grid():
         self.batteries = []
         self.cables_list = []
         self.costs = 0
+        self.batt_loc = []
         self.add_houses_and_cables()
-        self.add_batteries()
+        # self.add_batteries()
 
 
 
@@ -59,16 +60,15 @@ class Grid():
 
     def add_batteries(self):
         '''get the coordinate and capacity of the battery'''
-        for battery in self.battery_data:
 
-            split_data = battery.split(',')
-            true_data = [data.strip('"') for data in split_data]
-            pos_x = int(true_data[0])
-            pos_y = int(true_data[1])
+        # Loop over the rows in the array containing the battery positions
+        for (x, y) in self.batt_loc[0]:
+            pos_x = x
+            pos_y = y
+            pos_x_y = (x, y)
+            capacity = float(1507)
 
-            # make it one coordinate
-            pos_x_y = (pos_x, pos_y)
-            capacity = float(true_data[2])
+            # Instantiate the batteries as an object
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
 
     def is_capacity_full(self, battery):
@@ -83,7 +83,7 @@ class Grid():
             while cable.connected == False:
                 cable.step()
 
-                # chack if in battery coordinates
+                # check if in battery coordinates
                 for pos_capacity in self.batteries.values():
                     if pos_capacity[0] == cable.coordinates_list[-1]:
                         cable.connected =  True
