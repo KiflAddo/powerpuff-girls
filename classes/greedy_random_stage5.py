@@ -127,11 +127,14 @@ class Greedy_Random():
     def kmeans(self):
         data = self.grid.numpy_houses()
 
+        # Use the sklearn package KMeans to assign the batteries the optimal
+        # positions in the grid
         kmeans = KMeans(n_clusters=5, n_init="auto").fit(data)
         kmeans.predict(data)
 
+        # Save the optimal battery coordinates rounded to the nearest number
+        # as an integer
         battery_coords = (np.round(kmeans.cluster_centers_)).astype(int)
-
         self.grid.batt_loc.append(battery_coords)
 
     def run(self, visualize=False, output=False):
