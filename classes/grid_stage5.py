@@ -94,7 +94,9 @@ class Grid():
 
         # loop through cables and add the total length, use that the calculate cable cost
         for house, cable in self.houses_and_cables.items():
-            total_length += len(cable.coordinates_list)
+
+            # length without shared cables
+            total_length += len(cable.coordinates_list - cable.shared_segments)
         cable_cost = total_length * 9
 
         # loop through the batteries and use that to calculate battery costs
