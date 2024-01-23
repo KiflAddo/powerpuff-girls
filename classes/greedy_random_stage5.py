@@ -133,3 +133,17 @@ class Greedy_Random():
         battery_coords = (np.round(kmeans.cluster_centers_)).astype(int)
 
         self.grid.batt_loc.append(battery_coords)
+
+    def run(self, visualize=False, output=False):
+        self.kmeans()
+        self.grid.add_batteries()
+        self.smallest_distance()
+        self.step()
+        self.grid.calculate_costs()
+
+        if visualize == True:
+            self.grid.setup_plot()
+            self.grid.visualize()
+
+        if output == True:
+            self.grid.output()
