@@ -15,16 +15,16 @@ import numpy as np
 
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/district_3/district-3_batteries.csv')
+    batteries = access_data('huizen_batterijen/district_2/district-2_batteries.csv')
 
-    houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
+    houses = access_data('huizen_batterijen/district_2/district-2_houses.csv')
     # experiments(100)
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
-
-    algorithm.kmeans()
-    grid.add_batteries()
-    experiments(10)
+    algorithm.run(visualize=True)
+    #
+    # grid.add_batteries()
+    # grid.experiments(10)
     # # experiments2(10, algorithm)
     #
     # algorithm.smallest_distance()

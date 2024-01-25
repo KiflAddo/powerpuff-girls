@@ -143,6 +143,7 @@ class Greedy_Random():
         self.smallest_distance()
         self.step()
         self.grid.calculate_costs()
+        print(self.grid.costs)
 
         if visualize == True:
             self.grid.setup_plot()
