@@ -151,3 +151,5 @@ class Greedy_Random():
 
         if output == True:
             self.grid.output()
+
+        return self.grid

@@ -13,6 +13,7 @@ import sys
 import pandas as pd
 from sklearn.cluster import KMeans
 import numpy as np
+from classes.hill_climber import Hill_Climber
 
 
 if __name__ == "__main__":
@@ -23,10 +24,13 @@ if __name__ == "__main__":
     # experiments(100)
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
-    # algorithm.run(visualize=True)
+    greedy_random_grid = algorithm.run()
+    hill = Hill_Climber(greedy_random_grid)
+    hill.improve_steps()
 
-    experiments(10000, Greedy_Random, houses, batteries)
-    visualize_cost('results.csv', 'figures/greedy_random3.png')
+
+    # experiments(10000, Greedy_Random, houses, batteries)
+    # visualize_cost('results.csv', 'figures/greedy_random3.png')
     #
     # grid.add_batteries()
     # grid.experiments(10)

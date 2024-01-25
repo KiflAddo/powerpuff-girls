@@ -8,7 +8,7 @@ def visualize_cost(input_filename, output_filename):
 
     df = pd.read_csv(input_filename, sep=',')
 
-    plt.hist(df['Costs'], bins=50)
+    plt.hist(df['Costs'], bins=500)
     plt.xlabel("Costs")
     plt.ylabel("Count")
     plt.title("Experiment Costs")
