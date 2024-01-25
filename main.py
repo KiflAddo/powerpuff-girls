@@ -8,6 +8,7 @@ from classes.grid_stage5 import Grid
 from classes.greedy_random_stage5 import Greedy_Random
 from access_data import access_data
 from experiment import experiments
+from visualize_cost import visualize_cost
 import sys
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -15,13 +16,17 @@ import numpy as np
 
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/district_2/district-2_batteries.csv')
+    batteries = access_data('huizen_batterijen/district_3/district-3_batteries.csv')
 
-    houses = access_data('huizen_batterijen/district_2/district-2_houses.csv')
+    houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
+
     # experiments(100)
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
-    algorithm.run(visualize=True)
+    # algorithm.run(visualize=True)
+
+    experiments(10000, Greedy_Random, houses, batteries)
+    visualize_cost('results.csv', 'figures/greedy_random3.png')
     #
     # grid.add_batteries()
     # grid.experiments(10)

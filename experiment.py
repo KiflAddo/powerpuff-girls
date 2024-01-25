@@ -4,8 +4,8 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.grid_kifl import Grid
-from classes.greedy_random import Greedy_Random
+from classes.greedy_random_stage5 import Greedy_Random
+from classes.grid_stage5 import Grid
 import sys
 import pandas as pd
 from pprint import pprint
@@ -24,6 +24,8 @@ def experiments(number_of_experiments, algorithm_heuristic, houses, batteries):
 
         grid = Grid(houses, batteries)
         algorithm = algorithm_heuristic(grid)
+        algorithm.kmeans()
+        grid.add_batteries()
         algorithm.smallest_distance()
         algorithm.step()
         grid.calculate_costs()
