@@ -143,7 +143,7 @@ class Grid():
 
         # Set grid
         self.ax1.grid()
-        pprint(self.smallest_dict)
+        pprint(smallest_dict)
 
         for battery in self.smallest_dict.items():
 
