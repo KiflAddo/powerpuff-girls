@@ -125,6 +125,8 @@ class Greedy_Random():
             min_dist_battery.used_capacity += house.capacity
 
     def kmeans(self):
+        '''Partitions the houses into 5 clusters where each datapoint belongs
+        to the cluster with the nearest mean'''
         data = self.grid.numpy_houses()
 
         # Use the sklearn package KMeans to assign the batteries the optimal
@@ -138,6 +140,8 @@ class Greedy_Random():
         self.grid.batt_loc.append(battery_coords)
 
     def run(self, visualize=False, output=False):
+        '''Function that calls on each function needed for a single succesfull
+        run of the algorithm'''
         self.kmeans()
         self.grid.add_batteries()
         self.smallest_distance()

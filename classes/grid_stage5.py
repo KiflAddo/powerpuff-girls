@@ -43,13 +43,16 @@ class Grid():
             self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
 
     def numpy_houses(self):
-        # array = np.empty((0,2), int)
-        # array = np.array()
+        '''creates a numpy array of the house coordinates which is used for
+        the kmeans() function'''
         arr = []
+
+        # Loop over houses
         for house in self.houses_and_cables:
-            # array = np.append(array, np.array([[house.pos_x, house.pos_y]]), axis=0)
-            # array.add([house.pos_x, house.pos_y])
+            # Save the x and y coordinates of the house to the list 'arr'
             arr.append([house.pos_x, house.pos_y])
+
+        # Convert the list 'arr' to a numpy array
         array = np.array(arr)
         return array
 
