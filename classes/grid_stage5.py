@@ -6,6 +6,7 @@ from pprint import pprint
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+from collections import Counter
 
 class Grid():
     '''Grid with houses and cables as dict. Batteries will be put in a list'''
@@ -19,8 +20,7 @@ class Grid():
         self.batteries = []
         self.cables_list = []
         self.costs = 0
-        self.shared_segments = 0
-        self.all_cable_locations = set()
+        self.shared_segments = {}
         self.batt_loc = []
         self.smallest_dict = {}
         self.add_houses_and_cables()
@@ -71,6 +71,8 @@ class Grid():
 
             # Instantiate the batteries as an object
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
+        for battery in self.batteries:
+            self.shared_segments[battery] = []
 
     def is_capacity_full(self, battery):
         if battery.used_capacity >= battery.capacity:
@@ -92,17 +94,25 @@ class Grid():
 
     def calculate_costs(self):
         '''function to calculate the costs'''
+        total_shared_cables = 0
+        for battery in self.shared_segments:
+            duplicate_dict = Counter(self.shared_segments[battery])
+            total_duplicates = sum(duplicate_dict.values())
+            unique_values = set(self.shared_segments[battery])
+            shared_cables = total_duplicates - len(unique_values)
+            total_shared_cables += shared_cables
 
         total_length = 0
         cable_cost = 0
         battery_cost = 0
+
 
         # loop through cables and add the total length, use that the calculate cable cost
         for house, cable in self.houses_and_cables.items():
 
             # length without shared cables
             total_length += len(cable.coordinates_list)
-        cable_cost = (total_length - self.shared_segments) * 9
+        cable_cost = (total_length - total_shared_cables) * 9
 
         # loop through the batteries and use that to calculate battery costs
         for battery in self.batteries:
@@ -143,15 +153,15 @@ class Grid():
 
         # Set grid
         self.ax1.grid()
-        pprint(smallest_dict)
-
-        for battery in self.smallest_dict.items():
-
-            print(battery)
-            for house in battery.items():
-                cable = self.houses_and_cables.get(house)
-                print(cable.coordinates_list)
-                break
+        # pprint(self.smallest_dict)
+        #
+        # for battery in self.smallest_dict.items():
+        #
+        #     print(battery)
+        #     for house in battery.items():
+        #         cable = self.houses_and_cables.get(house)
+        #         print(cable.coordinates_list)
+                # break
 
         # Loop over houses and cables
         for house, cable in self.houses_and_cables.items():
