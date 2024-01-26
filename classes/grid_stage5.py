@@ -96,9 +96,10 @@ class Grid():
         '''function to calculate the costs'''
         total_shared_cables = 0
         for battery in self.shared_segments:
-            duplicate_dict = Counter(self.shared_segments[battery])
+            flatten = sum(self.shared_segments[battery], [])
+            duplicate_dict = Counter(flatten)
             total_duplicates = sum(duplicate_dict.values())
-            unique_values = set(self.shared_segments[battery])
+            unique_values = set(flatten)
             shared_cables = total_duplicates - len(unique_values)
             total_shared_cables += shared_cables
 

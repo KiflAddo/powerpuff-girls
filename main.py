@@ -24,9 +24,9 @@ if __name__ == "__main__":
     # experiments(100)
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
-    greedy_random_grid = algorithm.run(visualize = True)
-    # hill = Hill_Climber(greedy_random_grid)
-    # hill.improve_steps()
+    greedy_random_grid = algorithm.run()
+    hill = Hill_Climber(greedy_random_grid)
+    hill.improve_steps()
 
 
     # experiments(1, Greedy_Random, houses, batteries)
