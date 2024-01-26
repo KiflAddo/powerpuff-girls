@@ -102,22 +102,37 @@ class Greedy_Random():
 
     def smallest_distance(self):
         ''''Calculates the battery with the smallest distance from a house'''
-        count = 0
-        for house in self.grid.houses_and_cables:
+        while len(self.grid.smallest_dict) < 150:
 
-            # dict with house as key and closest battery as value
-            distance_dict = {}
+            # Shuffle keys
+            keys = list(self.grid.houses_and_cables.keys())
+            random.shuffle(keys)
 
-            for battery in self.grid.batteries:
+            for house in keys:
+                count = 0
 
-                # connect house with different battery if the battery capacity is fully used
-                if battery.used_capacity <= battery.capacity:
-                    # print(battery.used_capacity)
-                    distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
-                    distance_dict[battery] = distance
-            min_dist_battery = min(distance_dict, key=distance_dict.get)
-            self.grid.smallest_dict[house] = min_dist_battery
-            min_dist_battery.used_capacity += house.capacity
+                # dict with house as key and closest battery as value
+                distance_dict = {}
+
+                for battery in self.grid.batteries:
+
+                    # connect house with different battery if the battery capacity is fully used
+                    if (battery.used_capacity + house.capacity) <= battery.capacity:
+                        # print(battery.used_capacity)
+                        distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
+                        distance_dict[battery] = distance
+                        count += 1
+
+                if count == 0:
+                    self.grid.smallest_dict.clear()
+                    self.grid.clear_objects()
+                    break
+
+                # print(len(self.grid.smallest_dict))
+                min_dist_battery = min(distance_dict, key=distance_dict.get)
+                self.grid.smallest_dict[house] = min_dist_battery
+                min_dist_battery.used_capacity += house.capacity
+
 
     def kmeans(self):
         '''Partitions the houses into 5 clusters where each datapoint belongs

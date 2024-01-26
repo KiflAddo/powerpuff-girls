@@ -25,12 +25,20 @@ if __name__ == "__main__":
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
     greedy_random_grid = algorithm.run()
-    hill = Hill_Climber(greedy_random_grid)
-    hill.improve_steps()
+
+    for battery in greedy_random_grid.batteries:
+        print(battery.capacity, battery.used_capacity)
+
+    # hill = Hill_Climber(greedy_random_grid)
+    # hill.improve_steps()
 
 
+    experiments(100, Greedy_Random, houses, batteries)
+    visualize_cost('results.csv', 'figures/step_random.png')
+=======
     # experiments(1, Greedy_Random, houses, batteries)
     # visualize_cost('results.csv', 'figures/greedy_random3.png')
+    
     #
     # grid.add_batteries()
     # grid.experiments(10)

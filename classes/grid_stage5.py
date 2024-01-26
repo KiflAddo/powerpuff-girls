@@ -164,24 +164,56 @@ class Grid():
         #         print(cable.coordinates_list)
                 # break
 
-        # Loop over houses and cables
-        for house, cable in self.houses_and_cables.items():
-            x_coord_cable = []
-            y_coord_cable = []
 
-            # Loop over coordinates of the cables of one house
-            for coord in cable.coordinates_list:
+        battery_objects = set()
+        # Create a set of battery objects by looping over the keys and values
+        # in the dictionary 'smallest_dict'
+        for house, battery in self.smallest_dict.items():
+            battery_objects.add(battery)
 
-                # Save the x_coordinate of one cable section to the list
-                # x_coord_cable
-                x_coord_cable.append(coord[0])
+        # Convert set of batteries to list
+        battery_objects = list(battery_objects)
 
-                # Save the y_coordinate of one cable section to the list
-                # y_coord_cable
-                y_coord_cable.append(coord[1])
+        # Loop over the batteries
+        for battery_kind in battery_objects:
 
-            # Plot the cable connection the house to a battery
-            plt.plot(x_coord_cable, y_coord_cable, 'g-')
+            # Loop over the houses and batteries in 'smallest_dict'
+            for house, battery in self.smallest_dict.items():
+                # Determine if 'battery' is the same as 'battery_kind' so only
+                # the cables connecting the houses assigned to one specific
+                # battery are plotted
+                if battery == battery_kind:
+                    cable = self.houses_and_cables.get(house)
+
+                    x_coord_cable = []
+                    y_coord_cable = []
+
+                    for coord in cable.coordinates_list:
+                        # Save the x_coordinate of one cable section to the list
+                        # x_coord_cable
+                        x_coord_cable.append(coord[0])
+
+                        # Save the y_coordinate of one cable section to the list
+                        # y_coord_cable
+                        y_coord_cable.append(coord[1])
+
+                    # Plot the cables in the right colour based on which battery
+                    # they are connected to
+                    if battery == battery_objects[0]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'g-')
+
+                    elif battery == battery_objects[1]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'm-')
+
+                    elif battery == battery_objects[2]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'c-')
+
+                    elif battery == battery_objects[3]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'y-')
+
+                    elif battery == battery_objects[4]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'k-')
+
 
         plt.show()
 
@@ -250,3 +282,7 @@ class Grid():
 
             true_data.append(data)
             pprint(true_data)
+
+    def clear_objects(self):
+        for battery in self.batteries:
+            battery.used_capacity = 0
