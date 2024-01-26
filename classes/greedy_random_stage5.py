@@ -69,9 +69,7 @@ class Greedy_Random():
                         cable.coordinates_list.append(cable_coordinate)
 
                     # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
-                    if cable_coordinate in self.grid.all_cable_locations:
-                        self.grid.shared_segments += 1
-                    self.grid.all_cable_locations.add(cable_coordinate)
+                    self.grid.shared_segments[battery].append(cable_coordinate)
 
                 if direction == 2 and count_y < abs(y_steps):
 
@@ -89,9 +87,7 @@ class Greedy_Random():
                         cable.coordinates_list.append(cable_coordinate)
 
                     # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
-                    if cable_coordinate in self.grid.all_cable_locations:
-                        self.grid.shared_segments += 1
-                    self.grid.all_cable_locations.add(cable_coordinate)
+                    self.grid.shared_segments[battery].append(cable_coordinate)
 
 
 
