@@ -1,6 +1,7 @@
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
+from classes.greedy_random_stage5 import Greedy_Random
 from pprint import pprint
 import random
 import matplotlib.pyplot as plt
@@ -21,6 +22,7 @@ class Grid():
         self.shared_segments = 0
         self.all_cable_locations = set()
         self.batt_loc = []
+        self.smallest_dict = {}
         self.add_houses_and_cables()
 
 
@@ -141,6 +143,15 @@ class Grid():
 
         # Set grid
         self.ax1.grid()
+        pprint(self.smallest_dict)
+
+        for battery in self.smallest_dict.items():
+
+            print(battery)
+            for house in battery.items():
+                cable = self.houses_and_cables.get(house)
+                print(cable.coordinates_list)
+                break
 
         # Loop over houses and cables
         for house, cable in self.houses_and_cables.items():
