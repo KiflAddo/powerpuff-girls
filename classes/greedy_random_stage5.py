@@ -16,7 +16,7 @@ class Greedy_Random():
 
     def __init__(self, grid):
         self.coordinates_list = []
-        self.smallest_dict = {}
+        # self.smallest_dict = {}
 
         self.grid = grid
 
@@ -26,7 +26,7 @@ class Greedy_Random():
             untill the cable is connected to a battery'''
 
         count = 0
-        for house, battery in self.smallest_dict.items():
+        for house, battery in self.grid.smallest_dict.items():
 
             #Negative means go  left, positive means go right
             x_steps = battery.pos_x - house.pos_x
@@ -121,7 +121,7 @@ class Greedy_Random():
                     distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
                     distance_dict[battery] = distance
             min_dist_battery = min(distance_dict, key=distance_dict.get)
-            self.smallest_dict[house] = min_dist_battery
+            self.grid.smallest_dict[house] = min_dist_battery
             min_dist_battery.used_capacity += house.capacity
 
     def kmeans(self):
