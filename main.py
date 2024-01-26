@@ -35,6 +35,10 @@ if __name__ == "__main__":
 
     experiments(100, Greedy_Random, houses, batteries)
     visualize_cost('results.csv', 'figures/step_random.png')
+=======
+    # experiments(1, Greedy_Random, houses, batteries)
+    # visualize_cost('results.csv', 'figures/greedy_random3.png')
+    
     #
     # grid.add_batteries()
     # grid.experiments(10)
