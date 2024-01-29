@@ -24,6 +24,8 @@ class Grid():
         self.shared_segments = {}
         self.batt_loc = []
         self.smallest_dict = {}
+        # self.all_cable_locations = set()
+
         self.add_houses_and_cables()
 
 
