@@ -9,6 +9,8 @@ import random
 from sklearn.cluster import KMeans
 import numpy as np
 import copy
+from matplotlib import pyplot as plt
+
 
 
 class Hill_Climber():
@@ -16,6 +18,8 @@ class Hill_Climber():
 
     def __init__(self, grid):
         self.grid = grid
+        self.all_costs = []
+        self.iterations_list = []
 
     def run(self):
         ''' Takes the step function multiple times untill improvement '''
@@ -23,7 +27,6 @@ class Hill_Climber():
         house_keys = list(self.grid.houses_and_cables.keys())
 
         # list and counter to plot costs with iterations
-        all_costs = []
         iterations = 0
 
         while iterations < 10000:
@@ -34,6 +37,7 @@ class Hill_Climber():
 
             iterations += 1
             print(iterations)
+            self.iterations_list.append(iterations)
 
             # get a random house from the dictionary
             house, battery, cable = self.choose_house(house_keys)
@@ -65,13 +69,11 @@ class Hill_Climber():
 
                 self.grid.shared_segments[battery].append(cable.coordinates_list)
 
-                all_costs.append(old_cost)
+                self.all_costs.append(old_cost)
 
             # else keep the changes made
             else:
-                all_costs.append(new_cost)
-
-        print(all_costs)
+                self.all_costs.append(new_cost)
 
 
     def step(self, battery, cable, house):
@@ -142,3 +144,12 @@ class Hill_Climber():
         cable = self.grid.houses_and_cables[house]
 
         return house, battery, cable
+
+    def visualize(self, output_file):
+        plt.plot(self.iterations_list, self.all_costs, "b-" )
+        plt.text(25, 10, f'{self.all_costs[0]} {self.all_costs[-1]}', color = "black", fontsize = 15 )
+        plt.xlabel('Iterations', fontsize = 15)
+        plt.ylabel('Cost', fontsize = 15)
+        plt.title('Hill-Climber', fontsize = 20)
+        plt.savefig(output_file)
+        plt.show()

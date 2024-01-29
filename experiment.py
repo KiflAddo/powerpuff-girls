@@ -10,6 +10,8 @@ import sys
 import pandas as pd
 from pprint import pprint
 import csv
+from tqdm import tqdm
+
 
 
 def experiments(number_of_experiments, algorithm_heuristic, houses, batteries):
@@ -18,7 +20,7 @@ def experiments(number_of_experiments, algorithm_heuristic, houses, batteries):
     results = {}
 
     # Do the experiment N times
-    for experiment in range(1, number_of_experiments + 1):
+    for experiment in tqdm(range(1, number_of_experiments + 1)):
         experiment_dict = {}
         battery_locations = set()
 
