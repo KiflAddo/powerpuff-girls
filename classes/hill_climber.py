@@ -8,6 +8,7 @@ from classes.grid import Grid
 import random
 from sklearn.cluster import KMeans
 import numpy as np
+import copy
 
 
 class Hill_Climber():
@@ -19,7 +20,6 @@ class Hill_Climber():
     def improve_steps(self):
         ''' Takes the step function multiple times untill improvement '''
 
-        old_cost = self.grid.costs
         house_keys = list(self.grid.houses_and_cables.keys())
 
         # list and counter to plot costs with iterations
@@ -28,7 +28,10 @@ class Hill_Climber():
         cost_difference = 0
         thres = 500
 
-        while iterations < 3000000:
+        while iterations < 10000:
+
+            self.grid.calculate_costs()
+            old_cost = self.grid.costs
             # calculate the old cost before taking a different path
             iterations += 1
             print(iterations)
@@ -43,6 +46,11 @@ class Hill_Climber():
             # print(battery)
 
             cable = self.grid.houses_and_cables[house]
+
+            # save the old coordinates in case the cost doesn't go up
+            old_coordinates_list = copy.deepcopy(cable.coordinates_list)
+
+
             new_coordinates_list = []
 
             # remove all coordinates to lay a new cable
@@ -106,8 +114,19 @@ class Hill_Climber():
             # calculate the new cost after adapting the cable
             self.grid.calculate_costs()
             new_cost = self.grid.costs
+
+            # If the costs did not decrease remove the changes made
+            if old_cost < new_cost:
+                self.grid.shared_segments[battery].remove(new_coordinates_list)
+                cable.coordinates_list.clear()
+                cable.coordinates_list = old_coordinates_list
+                self.grid.shared_segments[battery].append(cable.coordinates_list)
+
+
+
+
             # print(new_cost)
-            cost_difference = old_cost - new_cost
+            # cost_difference = old_cost - new_cost
             all_costs.append(new_cost)
 
         print(all_costs)
