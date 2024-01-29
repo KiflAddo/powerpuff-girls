@@ -16,7 +16,8 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 
 
 
-## Repository 
+## Repository KLOPT NOG NIET VOLLEDIG (Check na cleanen)
+
 - `classes`:            Hierin staan alle classes en algoritmen
 - `figures`:            Hier worden alle plots van visualize cost opgeslagen EN OOK DIE VAN HILLCLIMBER COST DECREASE
 - `huizen_batterijen`:  De data van de grids waarmee we werken
