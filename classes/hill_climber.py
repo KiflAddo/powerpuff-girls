@@ -25,10 +25,8 @@ class Hill_Climber():
         # list and counter to plot costs with iterations
         all_costs = []
         iterations = 0
-        cost_difference = 0
-        thres = 500
 
-        while iterations < 10000:
+        while iterations < 100000:
 
             self.grid.calculate_costs()
             old_cost = self.grid.costs
@@ -36,7 +34,6 @@ class Hill_Climber():
             iterations += 1
             print(iterations)
             # calculate the old cost before taking a different path
-            # print(old_cost)
 
             # get a random house and cable from the dictionary
             house = random.choice(house_keys)
@@ -49,7 +46,6 @@ class Hill_Climber():
 
             # save the old coordinates in case the cost doesn't go up
             old_coordinates_list = copy.deepcopy(cable.coordinates_list)
-
 
             new_coordinates_list = []
 
@@ -121,13 +117,9 @@ class Hill_Climber():
                 cable.coordinates_list.clear()
                 cable.coordinates_list = old_coordinates_list
                 self.grid.shared_segments[battery].append(cable.coordinates_list)
-
-
-
-
-            # print(new_cost)
-            # cost_difference = old_cost - new_cost
-            all_costs.append(new_cost)
+                all_costs.append(old_cost)
+            else:
+                all_costs.append(new_cost)
 
         print(all_costs)
 
