@@ -5,6 +5,7 @@ from classes.greedy_random_stage5 import Greedy_Random
 from pprint import pprint
 import random
 import matplotlib.pyplot as plt
+import matplotlib.ticker as plticker
 import numpy as np
 from collections import Counter
 
@@ -125,57 +126,16 @@ class Grid():
     def visualize(self):
         '''Plots the houses as blue squares, the batteries as red circles and
         the cables connecting the two as green lines'''
-        x_pos_list = []
-        y_pos_list = []
-
-        # Append x-coordinates and y-coordinates of houses to a list
-        for house in self.houses_and_cables:
-            x_pos_list.append(int(house.pos_x))
-            y_pos_list.append(int(house.pos_y))
-
-
-        x_pos_list_bat = []
-        y_pos_list_bat = []
-        colour_bat = []
-
-        # Append x-coordinates and y-coordinates of batteries to a list
-        for battery in self.batteries:
-            x_pos_list_bat.append(int(battery.pos_x))
-            y_pos_list_bat.append(int(battery.pos_y))
-            colour_bat.append('r')
 
         # Plot houses and batteries
-        self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
-        self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
+        self.plot_houses()
+        self.plot_batteries()
 
-        # Initialize xticks and yticks for the grid
-        plt.xticks(list(range(0,51)))
-        plt.yticks(list(range(0,51)))
-
-        # Set grid
-        self.ax1.grid()
-        # pprint(self.smallest_dict)
-        #
-        # for battery in self.smallest_dict.items():
-        #
-        #     print(battery)
-        #     for house in battery.items():
-        #         cable = self.houses_and_cables.get(house)
-        #         print(cable.coordinates_list)
-                # break
-
-
-        battery_objects = set()
-        # Create a set of battery objects by looping over the keys and values
-        # in the dictionary 'smallest_dict'
-        for house, battery in self.smallest_dict.items():
-            battery_objects.add(battery)
-
-        # Convert set of batteries to list
-        battery_objects = list(battery_objects)
+        # Create a set of battery objects
+        self.bat_object_set()
 
         # Loop over the batteries
-        for battery_kind in battery_objects:
+        for battery_kind in self.battery_objects:
 
             # Loop over the houses and batteries in 'smallest_dict'
             for house, battery in self.smallest_dict.items():
@@ -199,28 +159,80 @@ class Grid():
 
                     # Plot the cables in the right colour based on which battery
                     # they are connected to
-                    if battery == battery_objects[0]:
+                    if battery == self.battery_objects[0]:
                         plt.plot(x_coord_cable, y_coord_cable, 'g-')
 
-                    elif battery == battery_objects[1]:
+                    elif battery == self.battery_objects[1]:
                         plt.plot(x_coord_cable, y_coord_cable, 'm-')
 
-                    elif battery == battery_objects[2]:
+                    elif battery == self.battery_objects[2]:
                         plt.plot(x_coord_cable, y_coord_cable, 'c-')
 
-                    elif battery == battery_objects[3]:
+                    elif battery == self.battery_objects[3]:
                         plt.plot(x_coord_cable, y_coord_cable, 'y-')
 
-                    elif battery == battery_objects[4]:
+                    elif battery == self.battery_objects[4]:
                         plt.plot(x_coord_cable, y_coord_cable, 'k-')
 
-
+        plt.title("Grid")
+        # plt.gca().axes.get_yaxis().set_visible(False)
         plt.show()
+
+    def plot_houses(self):
+        x_pos_list = []
+        y_pos_list = []
+
+        # Append x-coordinates and y-coordinates of houses to a list
+        for house in self.houses_and_cables:
+            x_pos_list.append(int(house.pos_x))
+            y_pos_list.append(int(house.pos_y))
+
+        self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
+
+    def plot_batteries(self):
+        x_pos_list_bat = []
+        y_pos_list_bat = []
+        colour_bat = []
+
+        # Append x-coordinates and y-coordinates of batteries to a list
+        for battery in self.batteries:
+            x_pos_list_bat.append(int(battery.pos_x))
+            y_pos_list_bat.append(int(battery.pos_y))
+            colour_bat.append('r')
+
+        # Plot batteries
+        self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
+
+    def bat_object_set(self):
+        self.battery_objects = set()
+        # Create a set of battery objects by looping over the keys and values
+        # in the dictionary 'smallest_dict'
+        for house, battery in self.smallest_dict.items():
+            self.battery_objects.add(battery)
+
+        # Convert set of batteries to list
+        self.battery_objects = list(self.battery_objects)
 
 
     def setup_plot(self):
         '''Sets up the plot'''
         self.fig, self.ax1 = plt.subplots(1)
+        self.ax1.set_aspect('equal', adjustable='box')
+
+        # Initialize xticks and yticks for the grid
+        plt.xticks(list(range(0,51)), rotation=45, fontsize=7)
+        plt.yticks(list(range(0,51)))
+
+        # plt.figure(figsize=(50,50))
+        # xticks = list(range(0, 51))
+        # yticks = list(range(0, 51))
+
+        # loc = plticker.MultipleLocator(base=10) # this locator puts ticks at regular intervals
+        # self.ax1.xaxis.set_major_locator(loc)
+        # self.ax1.yaxis.set_major_locator(loc)
+
+        # Set grid
+        self.ax1.grid()
 
 
     def output(self):
