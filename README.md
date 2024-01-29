@@ -24,3 +24,6 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 - `main.py`:            Hier roep je alle functies en de verschillende algoritmen aan
 - `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py.
+
+## Classes HIER KOMEN CLASSES EN WAT ZE KUNNEN
+Bij kmeans warning message voorkomen door:
