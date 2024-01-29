@@ -177,10 +177,10 @@ class Grid():
                         plt.plot(x_coord_cable, y_coord_cable, 'k-')
 
         plt.title("Grid")
-        # plt.gca().axes.get_yaxis().set_visible(False)
         plt.show()
 
     def plot_houses(self):
+        '''Plots the houses'''
         x_pos_list = []
         y_pos_list = []
 
@@ -192,6 +192,7 @@ class Grid():
         self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
 
     def plot_batteries(self):
+        '''Plots the batteries'''
         x_pos_list_bat = []
         y_pos_list_bat = []
         colour_bat = []
@@ -206,6 +207,7 @@ class Grid():
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
 
     def bat_object_set(self):
+        '''Creates a set of the battery objects'''
         self.battery_objects = set()
         # Create a set of battery objects by looping over the keys and values
         # in the dictionary 'smallest_dict'
@@ -225,19 +227,12 @@ class Grid():
         plt.xticks(list(range(0,51)), rotation=45, fontsize=7)
         plt.yticks(list(range(0,51)))
 
-        # plt.figure(figsize=(50,50))
-        # xticks = list(range(0, 51))
-        # yticks = list(range(0, 51))
-
-        # loc = plticker.MultipleLocator(base=10) # this locator puts ticks at regular intervals
-        # self.ax1.xaxis.set_major_locator(loc)
-        # self.ax1.yaxis.set_major_locator(loc)
-
         # Set grid
         self.ax1.grid()
 
 
     def output(self):
+        '''Creates an output and pretty prints it'''
         true_data = []
         dict = {"district": 1, "costs-shared": self.costs}
 
