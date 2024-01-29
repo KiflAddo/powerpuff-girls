@@ -126,49 +126,13 @@ class Grid():
     def visualize(self):
         '''Plots the houses as blue squares, the batteries as red circles and
         the cables connecting the two as green lines'''
-        # x_pos_list = []
-        # y_pos_list = []
-        #
-        # # Append x-coordinates and y-coordinates of houses to a list
-        # for house in self.houses_and_cables:
-        #     x_pos_list.append(int(house.pos_x))
-        #     y_pos_list.append(int(house.pos_y))
-        #
-        #
-        # x_pos_list_bat = []
-        # y_pos_list_bat = []
-        # colour_bat = []
-        #
-        # # Append x-coordinates and y-coordinates of batteries to a list
-        # for battery in self.batteries:
-        #     x_pos_list_bat.append(int(battery.pos_x))
-        #     y_pos_list_bat.append(int(battery.pos_y))
-        #     colour_bat.append('r')
-        #
-        # # Plot houses and batteries
-        # self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
-        # self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
 
+        # Plot houses and batteries
         self.plot_houses()
         self.plot_batteries()
+
+        # Create a set of battery objects
         self.bat_object_set()
-
-        # # Initialize xticks and yticks for the grid
-        # plt.xticks(list(range(0,51)))
-        # plt.yticks(list(range(0,51)))
-        #
-        # # Set grid
-        # self.ax1.grid()
-
-
-        # battery_objects = set()
-        # # Create a set of battery objects by looping over the keys and values
-        # # in the dictionary 'smallest_dict'
-        # for house, battery in self.smallest_dict.items():
-        #     battery_objects.add(battery)
-        #
-        # # Convert set of batteries to list
-        # battery_objects = list(battery_objects)
 
         # Loop over the batteries
         for battery_kind in self.battery_objects:
@@ -211,6 +175,7 @@ class Grid():
                         plt.plot(x_coord_cable, y_coord_cable, 'k-')
 
         plt.title("Grid")
+        # plt.gca().axes.get_yaxis().set_visible(False)
         plt.show()
 
     def plot_houses(self):
@@ -255,7 +220,7 @@ class Grid():
         self.ax1.set_aspect('equal', adjustable='box')
 
         # Initialize xticks and yticks for the grid
-        plt.xticks(list(range(0,51)))
+        plt.xticks(list(range(0,51)), rotation=45, fontsize=7)
         plt.yticks(list(range(0,51)))
 
         # plt.figure(figsize=(50,50))
