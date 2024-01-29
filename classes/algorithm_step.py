@@ -40,8 +40,6 @@ class Greedy_Random():
             self.count_x = 0
             self.count_y = 0
 
-            steps_needed = abs(self.x_steps)+abs(self.y_steps)
-
 
             self.cable = self.grid.houses_and_cables.get(house)
             self.cable.coordinates_list.append((self.cable_x, self.cable_y))
@@ -55,18 +53,33 @@ class Greedy_Random():
 
                 if direction == 1:
                     while self.count_x < abs(self.x_steps):
-                        self.step_x()
+                        self.step_x(battery)
                     while self.count_y < abs(self.y_steps):
-                        self.step_y()
+                        self.step_y(battery)
 
                 if direction == 2:
                     while self.count_y < abs(self.y_steps):
-                        self.step_y()
+                        self.step_y(battery)
                     while self.count_x < abs(self.x_steps):
-                        self.step_x()
+                        self.step_x(battery)
+
+            self.grid.shared_segments[battery].append(self.cable.coordinates_list)
+
+    def initialize_steps(self):
+        #Negative means go  left, positive means go right
+        self.x_steps = battery.pos_x - house.pos_x
+        self.y_steps = battery.pos_y - house.pos_y
+
+        # The starting positions that will be updated
+        self.cable_x = house.pos_x
+        self.cable_y = house.pos_y
+
+        # Counting steps for x and y
+        self.count_x = 0
+        self.count_y = 0
 
 
-    def step_x(self):
+    def step_x(self, battery):
         # Check if the value is positive and if the possible
         if self.x_steps > 0:
             self.cable_x += 1
@@ -81,11 +94,12 @@ class Greedy_Random():
             self.cable.coordinates_list.append(cable_coordinate)
 
         # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
-        if cable_coordinate in self.grid.all_cable_locations:
-            self.grid.shared_segments += 1
-        self.grid.all_cable_locations.add(cable_coordinate)
+        # if cable_coordinate in self.grid.all_cable_locations:
+        #     self.grid.shared_segments += 1
+        # self.grid.all_cable_locations.add(cable_coordinate)
+        # self.grid.shared_segments[battery].append(self.cable.coordinates_list)
 
-    def step_y(self):
+    def step_y(self, battery):
         # Check if the value is negative or positive
         if self.y_steps > 0:
             self.cable_y += 1
@@ -100,9 +114,10 @@ class Greedy_Random():
             self.cable.coordinates_list.append(cable_coordinate)
 
         # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
-        if cable_coordinate in self.grid.all_cable_locations:
-            self.grid.shared_segments += 1
-        self.grid.all_cable_locations.add(cable_coordinate)
+        # if cable_coordinate in self.grid.all_cable_locations:
+        #     self.grid.shared_segments += 1
+        # self.grid.all_cable_locations.add(cable_coordinate)
+        # self.grid.shared_segments[battery].append(self.cable.coordinates_list)
 
     def manhattan_distance(self, x1, y1, x2, y2):
         '''function that calculates the manhatten distance'''
@@ -116,22 +131,36 @@ class Greedy_Random():
 
     def smallest_distance(self):
         ''''Calculates the battery with the smallest distance from a house'''
-        count = 0
-        for house in self.grid.houses_and_cables:
+        while len(self.grid.smallest_dict) < 150:
 
-            # dict with house as key and closest battery as value
-            distance_dict = {}
+            # Shuffle keys
+            keys = list(self.grid.houses_and_cables.keys())
+            random.shuffle(keys)
 
-            for battery in self.grid.batteries:
+            for house in keys:
+                count = 0
 
-                # connect house with different battery if the battery capacity is fully used
-                if battery.used_capacity <= battery.capacity:
-                    # print(battery.used_capacity)
-                    distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
-                    distance_dict[battery] = distance
-            min_dist_battery = min(distance_dict, key=distance_dict.get)
-            self.grid.smallest_dict[house] = min_dist_battery
-            min_dist_battery.used_capacity += house.capacity
+                # dict with house as key and closest battery as value
+                distance_dict = {}
+
+                for battery in self.grid.batteries:
+
+                    # connect house with different battery if the battery capacity is fully used
+                    if (battery.used_capacity + house.capacity) <= battery.capacity:
+                        # print(battery.used_capacity)
+                        distance = self.manhattan_distance(battery.pos_x, battery.pos_y, house.pos_x, house.pos_y)
+                        distance_dict[battery] = distance
+                        count += 1
+
+                if count == 0:
+                    self.grid.smallest_dict.clear()
+                    self.grid.clear_objects()
+                    break
+
+                # print(len(self.grid.smallest_dict))
+                min_dist_battery = min(distance_dict, key=distance_dict.get)
+                self.grid.smallest_dict[house] = min_dist_battery
+                min_dist_battery.used_capacity += house.capacity
 
     def kmeans(self):
         '''Partitions the houses into 5 clusters where each datapoint belongs
