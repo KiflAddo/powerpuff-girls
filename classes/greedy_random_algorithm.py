@@ -4,7 +4,7 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.grid import Grid
+from classes.grid_k_means import Grid
 import random
 from sklearn.cluster import KMeans
 import numpy as np

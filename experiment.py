@@ -4,8 +4,8 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.greedy_random_stage5 import Greedy_Random
-from classes.grid_stage5 import Grid
+from classes.greedy_random_algorithm import Greedy_Random
+from classes.grid_k_means import Grid
 import sys
 import pandas as pd
 from pprint import pprint

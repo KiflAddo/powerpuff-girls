@@ -1,7 +1,7 @@
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.greedy_random_stage5 import Greedy_Random
+# from classes.greedy_random_stage5 import Greedy_Random
 from pprint import pprint
 import random
 import matplotlib.pyplot as plt

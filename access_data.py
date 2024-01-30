@@ -1,10 +1,4 @@
-import matplotlib.pyplot as plt
-from pprint import pprint
-import re
-from classes.house import House
-from classes.battery import Battery
-from classes.cables import Cables
-from classes.grid import Grid
+
 
 def access_data(file_name):
     data = []

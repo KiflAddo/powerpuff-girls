@@ -4,7 +4,7 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.grid import Grid
+from classes.grid_k_means import Grid
 import random
 from sklearn.cluster import KMeans
 import numpy as np
@@ -14,30 +14,33 @@ from matplotlib import pyplot as plt
 
 
 class Hill_Climber():
-    '''improving steps'''
+    '''
+    Class for hill climber which takes a Grid made through greedy_random and tries to improve it by
+    changes the way the cables are placed down.
+    '''
 
     def __init__(self, grid):
         self.grid = grid
         self.all_costs = []
         self.iterations_list = []
 
-    def run(self):
-        ''' Takes the step function multiple times untill improvement '''
+    def run(self, N=10000):
+        '''
+        This function chooses a random house-battery connection and places the cable in a different way
+         '''
 
         house_keys = list(self.grid.houses_and_cables.keys())
 
-        # list and counter to plot costs with iterations
-        iterations = 0
 
-        while iterations < 10000:
+        for iteration in range(N):
+            print(iteration)
 
             # calculate the old cost before taking a different path
             self.grid.calculate_costs()
             old_cost = self.grid.costs
 
-            iterations += 1
-            print(iterations)
-            self.iterations_list.append(iterations)
+            #store each iteration
+            self.iterations_list.append(iteration)
 
             # get a random house from the dictionary
             house, battery, cable = self.choose_house(house_keys)
@@ -48,14 +51,14 @@ class Hill_Climber():
             # save the old coordinates in case the cost doesn't decrease
             old_coordinates_list = copy.deepcopy(cable.coordinates_list)
 
-            # Keep taking steps untill the battery is reached
+            # Keep taking steps until the battery is reached
             new_coordinates_list = self.step(battery, cable, house)
 
-            # put the new coordinates in the dictionary
+            # save the new coordinates in the cable and add it to the battery dictionary
             cable.coordinates_list = new_coordinates_list
             self.grid.shared_segments[battery].append(new_coordinates_list)
 
-            # calculate the new cost after adapting the cable
+            # calculate the new cost after changing the cable
             self.grid.calculate_costs()
             new_cost = self.grid.costs
 
@@ -77,6 +80,9 @@ class Hill_Climber():
 
 
     def step(self, battery, cable, house):
+        '''
+        Lays a cable between a house and a battery in a random way
+        '''
 
         new_coordinates_list = []
 
@@ -133,6 +139,9 @@ class Hill_Climber():
         return new_coordinates_list
 
     def choose_house(self, house_keys):
+        '''
+        Function to choose a random house from a list
+        '''
 
         # get a random house from the dictionary
         house = random.choice(house_keys)
@@ -146,6 +155,10 @@ class Hill_Climber():
         return house, battery, cable
 
     def visualize(self, output_file):
+        '''
+        Function to visualize the hill-climber algorithm
+        '''
+
         # plt.plot(self.iterations_list, self.all_costs, "b-" )
         # plt.text(25, 10, f'{self.all_costs[0]} {self.all_costs[-1]}', color = "black", fontsize = 15 )
         # plt.xlabel('Iterations', fontsize = 15)
