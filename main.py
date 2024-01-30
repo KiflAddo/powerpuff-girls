@@ -4,8 +4,10 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.grid_k_means import Grid
-from classes.greedy_random_algorithm import Greedy_Random
+from classes.greedy_random_kmeans import Greedy_Random_kmeans
+from classes.grid_k_means import Grid_kmeans
+from classes.grid import Grid
+from classes.greedy_random import Greedy_Random
 from access_data import access_data
 from experiment import experiments
 from visualize_cost import visualize_cost
@@ -21,11 +23,10 @@ if __name__ == "__main__":
 
     houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
 
-    # experiments(100)
-    grid = Grid(houses, batteries)
-    algorithm = Greedy_Random(grid)
-    greedy_random_grid = algorithm.run(visualize=True)
-    # experiments(1000, Greedy_Random, houses, batteries)
+    # grid = Grid(houses, batteries)
+    # algorithm = Greedy_Random(grid)
+    # greedy_random_grid = algorithm.run(visualize=True)
+    experiments(10, Greedy_Random, houses, batteries, 'Testing')
 
     # hill = Hill_Climber(greedy_random_grid)
     # hill.run()

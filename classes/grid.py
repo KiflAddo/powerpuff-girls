@@ -5,6 +5,8 @@ from pprint import pprint
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+from collections import Counter
+
 
 class Grid():
     '''
@@ -22,9 +24,9 @@ class Grid():
         # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
         self.batteries = []
-        self.cables_list = []
         self.costs = 0
         self.shared_segments = {}
+        self.smallest_dict = {}
         self.add_houses_and_cables()
         self.add_batteries()
 
@@ -233,3 +235,12 @@ class Grid():
 
             true_data.append(data)
             pprint(true_data)
+
+    def clear_objects(self):
+        '''
+        Clears battery objects when the houses need to be connected to different
+        batteries
+        '''
+
+        for battery in self.batteries:
+            battery.used_capacity = 0

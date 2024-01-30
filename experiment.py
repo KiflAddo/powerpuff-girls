@@ -4,8 +4,10 @@ import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.greedy_random_algorithm import Greedy_Random
-from classes.grid_k_means import Grid
+from classes.greedy_random_kmeans import Greedy_Random_kmeans
+from classes.grid_k_means import Grid_kmeans
+from classes.grid import Grid
+from classes.greedy_random import Greedy_Random
 import sys
 import pandas as pd
 from pprint import pprint
@@ -24,8 +26,12 @@ def experiments(number_of_experiments, algorithm, houses, batteries, file_name):
         experiment_dict = {}
         battery_locations = set()
 
-        # Initialize the grid
-        grid = Grid(houses, batteries)
+        # choose which grid you want to initialize
+        if algorithm == Greedy_Random_kmeans:
+            # Initialize the grid
+            grid = Grid_kmeans(houses, batteries)
+        else:
+            grid = Grid(houses, batteries)
 
         # Initialzie the algorithm
         test_algorithm = algorithm(grid)

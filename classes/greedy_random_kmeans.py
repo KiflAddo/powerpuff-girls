@@ -1,14 +1,14 @@
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-from classes.grid_k_means import Grid
+from classes.grid_k_means import Grid_kmeans
 import random
 from sklearn.cluster import KMeans
 import numpy as np
 
 
 
-class Greedy_Random():
+class Greedy_Random_kmeans():
     '''
     This class takes a grid and applies the Greedy Random algorithm to it. It
     computes and saves the coordinates for the cables connecting the houses
@@ -209,7 +209,6 @@ class Greedy_Random():
         self.step()
         self.grid.calculate_costs()
 
-        print(self.grid.costs)
 
         if visualize == True:
             self.grid.setup_plot()

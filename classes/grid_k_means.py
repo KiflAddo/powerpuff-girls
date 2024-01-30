@@ -1,14 +1,13 @@
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
-# from classes.greedy_random_stage5 import Greedy_Random
 from pprint import pprint
 import random
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
 
-class Grid():
+class Grid_kmeans():
     '''Grid with houses and cables as dict. Batteries will be put in a list'''
 
     def __init__(self, house_data, battery_data):
