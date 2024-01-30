@@ -5,7 +5,6 @@ from classes.greedy_random_stage5 import Greedy_Random
 from pprint import pprint
 import random
 import matplotlib.pyplot as plt
-import matplotlib.ticker as plticker
 import numpy as np
 from collections import Counter
 
@@ -19,7 +18,6 @@ class Grid():
         # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
         self.batteries = []
-        self.cables_list = []
         self.costs = 0
         self.shared_segments = {}
         self.batt_loc = []
@@ -77,22 +75,22 @@ class Grid():
         for battery in self.batteries:
             self.shared_segments[battery] = []
 
-    def is_capacity_full(self, battery):
-        if battery.used_capacity >= battery.capacity:
-            battery.full = True
+    # def is_capacity_full(self, battery):
+    #     if battery.used_capacity >= battery.capacity:
+    #         battery.full = True
 
-    def is_connected(self):
-        '''check if the cable is connected'''
-        count = 0
-        for house, cable in self.houses_and_cables.items():
-
-            while cable.connected == False:
-                cable.step()
-
-                # check if in battery coordinates
-                for pos_capacity in self.batteries.values():
-                    if pos_capacity[0] == cable.coordinates_list[-1]:
-                        cable.connected =  True
+    # def is_connected(self):
+    #     '''check if the cable is connected'''
+    #     count = 0
+    #     for house, cable in self.houses_and_cables.items():
+    #
+    #         while cable.connected == False:
+    #             cable.step()
+    #
+    #             # check if in battery coordinates
+    #             for pos_capacity in self.batteries.values():
+    #                 if pos_capacity[0] == cable.coordinates_list[-1]:
+    #                     cable.connected =  True
 
 
     def calculate_costs(self):

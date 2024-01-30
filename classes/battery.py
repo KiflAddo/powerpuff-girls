@@ -10,4 +10,3 @@ class Battery():
         self.pos_x_y = pos_x_y
         self.capacity = capacity
         self.used_capacity = 0
-        self.full = False

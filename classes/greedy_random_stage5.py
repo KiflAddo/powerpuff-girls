@@ -16,7 +16,6 @@ class Greedy_Random():
 
     def __init__(self, grid):
         self.coordinates_list = []
-        # self.smallest_dict = {}
 
         self.grid = grid
 
