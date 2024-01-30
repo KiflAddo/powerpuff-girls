@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 
 
-def experiments(number_of_experiments, algorithm, houses, batteries):
+def experiments(number_of_experiments, algorithm, houses, batteries, file_name):
     '''Function that takes an algorithm as input, runs it N times and save the results to a csv '''
 
     results = {}
@@ -43,7 +43,7 @@ def experiments(number_of_experiments, algorithm, houses, batteries):
         results[experiment] = experiment_dict
 
     # Open the CSV file in write mode
-    with open('results.csv', 'w', newline='') as csv_results:
+    with open(file_name, 'w', newline='') as csv_results:
 
         # Create a CSV writer object
         csv_writer = csv.writer(csv_results)
