@@ -146,10 +146,17 @@ class Hill_Climber():
         return house, battery, cable
 
     def visualize(self, output_file):
-        plt.plot(self.iterations_list, self.all_costs, "b-" )
-        plt.text(25, 10, f'{self.all_costs[0]} {self.all_costs[-1]}', color = "black", fontsize = 15 )
-        plt.xlabel('Iterations', fontsize = 15)
-        plt.ylabel('Cost', fontsize = 15)
-        plt.title('Hill-Climber', fontsize = 20)
+        # plt.plot(self.iterations_list, self.all_costs, "b-" )
+        # plt.text(25, 10, f'{self.all_costs[0]} {self.all_costs[-1]}', color = "black", fontsize = 15 )
+        # plt.xlabel('Iterations', fontsize = 15)
+        # plt.ylabel('Cost', fontsize = 15)
+        # plt.title('Hill-Climber', fontsize = 20)
+        # plt.savefig(output_file)
+        # plt.show()
+        plt.plot(self.iterations_list, self.all_costs, "b-")
+        plt.text(max(self.iterations_list) * 0.9, 30000, f'{self.all_costs[0]} {self.all_costs[-1]}', color="black", fontsize=15, ha='right', va='top')
+        plt.xlabel('Iterations', fontsize=15)
+        plt.ylabel('Cost', fontsize=15)
+        plt.title('Hill-Climber', fontsize=20)
         plt.savefig(output_file)
         plt.show()
