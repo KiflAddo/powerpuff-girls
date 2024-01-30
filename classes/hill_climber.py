@@ -26,7 +26,8 @@ class Hill_Climber():
 
     def run(self, N=10000):
         '''
-        This function chooses a random house-battery connection and places the cable in a different way
+        This function chooses a random house-battery connection and places the cable in a different way,
+        thus it runs the hill_climber algorithm
          '''
 
         house_keys = list(self.grid.houses_and_cables.keys())
@@ -158,16 +159,7 @@ class Hill_Climber():
         '''
         Function to visualize the hill-climber algorithm
         '''
-
-        # plt.plot(self.iterations_list, self.all_costs, "b-" )
-        # plt.text(25, 10, f'{self.all_costs[0]} {self.all_costs[-1]}', color = "black", fontsize = 15 )
-        # plt.xlabel('Iterations', fontsize = 15)
-        # plt.ylabel('Cost', fontsize = 15)
-        # plt.title('Hill-Climber', fontsize = 20)
-        # plt.savefig(output_file)
-        # plt.show()
         plt.plot(self.iterations_list, self.all_costs, "b-")
-        plt.text(max(self.iterations_list) * 0.9, 30000, f'{self.all_costs[0]} {self.all_costs[-1]}', color="black", fontsize=15, ha='right', va='top')
         plt.xlabel('Iterations', fontsize=15)
         plt.ylabel('Cost', fontsize=15)
         plt.title('Hill-Climber', fontsize=20)

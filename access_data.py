@@ -1,6 +1,9 @@
 
-
 def access_data(file_name):
+    '''
+    Function that opens a csv and reads the data into python
+    '''
+
     data = []
 
     # open the file
