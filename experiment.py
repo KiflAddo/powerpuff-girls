@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 
 
-def experiments(number_of_experiments, algorithm_heuristic, houses, batteries):
+def experiments(number_of_experiments, algorithm, houses, batteries):
     '''Function that takes an algorithm as input, runs it N times and save the results to a csv '''
 
     results = {}
@@ -24,13 +24,15 @@ def experiments(number_of_experiments, algorithm_heuristic, houses, batteries):
         experiment_dict = {}
         battery_locations = set()
 
+        # Initialize the grid
         grid = Grid(houses, batteries)
-        algorithm = algorithm_heuristic(grid)
-        algorithm.kmeans()
-        grid.add_batteries()
-        algorithm.smallest_distance()
-        algorithm.step()
-        grid.calculate_costs()
+
+        # Initialzie the algorithm
+        test_algorithm = algorithm(grid)
+
+        # run the algorithm
+        new_grid = test_algorithm.run()
+
 
         # loop through all battery locations and add them to the dictionary
         for battery in grid.batteries:

@@ -7,7 +7,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class Grid():
-    '''Grid with houses and cables as dict. Batteries will be put in a list'''
+    '''
+    This class keeps track of the grid and all the changes
+    made in the grid with the use of the algorithms
+    '''
 
     def __init__(self, house_data, battery_data):
         self.house_data = house_data
@@ -21,6 +24,7 @@ class Grid():
         self.batteries = []
         self.cables_list = []
         self.costs = 0
+        self.shared_segments = {}
         self.add_houses_and_cables()
         self.add_batteries()
 
@@ -28,8 +32,11 @@ class Grid():
 
 
     def add_houses_and_cables(self):
-        '''get the coordinate and capacity of the house
-        save the house with it's cable in a the houses_and_cables dict'''
+        '''
+        get the coordinate and capacity of the houses
+        save the houses with it's cable in a the houses_and_cables dict
+        '''
+
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = int(split_data[0])
@@ -45,20 +52,11 @@ class Grid():
             # make a dict with cables as value for the house as key
             self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
 
-    def numpy_houses(self):
-        # array = np.empty((0,2), int)
-        # array = np.array()
-        arr = []
-        for house in self.houses_and_cables:
-            # array = np.append(array, np.array([[house.pos_x, house.pos_y]]), axis=0)
-            # array.add([house.pos_x, house.pos_y])
-            arr.append([house.pos_x, house.pos_y])
-        array = np.array(arr)
-        return array
-
 
     def add_batteries(self):
-        '''get the coordinate and capacity of the battery'''
+        '''
+        Get the coordinate and capacity of the battery
+        '''
         for battery in self.battery_data:
 
             split_data = battery.split(',')
@@ -70,36 +68,36 @@ class Grid():
             pos_x_y = (pos_x, pos_y)
             capacity = float(true_data[2])
             self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
+        for battery in self.batteries:
+            self.shared_segments[battery] = []
 
-    def is_capacity_full(self, battery):
-        if battery.used_capacity >= battery.capacity:
-            battery.full = True
-
-    def is_connected(self):
-        '''check if the cable is connected'''
-        count = 0
-        for house, cable in self.houses_and_cables.items():
-
-            while cable.connected == False:
-                cable.step()
-
-                # chack if in battery coordinates
-                for pos_capacity in self.batteries.values():
-                    if pos_capacity[0] == cable.coordinates_list[-1]:
-                        cable.connected =  True
 
 
     def calculate_costs(self):
-        '''function to calculate the costs'''
+        '''
+        function to calculate the costs
+        '''
+
+        total_shared_cables = 0
+        for battery in self.shared_segments:
+            flatten = sum(self.shared_segments[battery], [])
+            duplicate_dict = Counter(flatten)
+            total_duplicates = sum(duplicate_dict.values())
+            unique_values = set(flatten)
+            shared_cables = total_duplicates - len(unique_values)
+            total_shared_cables += shared_cables
 
         total_length = 0
         cable_cost = 0
         battery_cost = 0
 
+
         # loop through cables and add the total length, use that the calculate cable cost
         for house, cable in self.houses_and_cables.items():
+
+            # length without shared cables
             total_length += len(cable.coordinates_list)
-        cable_cost = total_length * 9
+        cable_cost = (total_length - total_shared_cables) * 9
 
         # loop through the batteries and use that to calculate battery costs
         for battery in self.batteries:
@@ -109,8 +107,11 @@ class Grid():
         self.costs = cable_cost + battery_cost
 
     def visualize(self):
-        '''Plots the houses as blue squares, the batteries as red circles and
-        the cables connecting the two as green lines'''
+        '''
+        Plots the houses as blue squares, the batteries as red circles and
+        the cables connecting the two as green lines
+        '''
+
         x_pos_list = []
         y_pos_list = []
 
@@ -164,11 +165,16 @@ class Grid():
 
 
     def setup_plot(self):
-        '''Sets up the plot'''
+        '''
+        Sets up the plot
+        '''
         self.fig, self.ax1 = plt.subplots(1)
 
 
     def output(self):
+        '''
+        Prints the output of the grid in the correct format
+        '''
         true_data = []
         dict = {"district": 1, "costs-shared": self.costs}
 
