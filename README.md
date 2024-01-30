@@ -26,8 +26,15 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py.
 
 ## Leg hier Main uit. Wat moet je doen om het aan de praat te krijgen
+Je runt de Main door in je terminal `python main.py` te typen.
+
+`main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
 
 ## Leg hier experiment uit. Wat moet je doen om het aan de praat te krijgen
+De `experiment` functie wordt aangeroepen en krijgt de volgende parameters meegegeven:
+iteraties=eigen input, algoritme=Greedy_Random of Greedy_Random_kmeans, houses=houses, batteries=batteries, file_name='eigen input'.
+Deze functie moet in de main worden aangeroepen en vervolgens voer je dus de main uit.
+
 
 ## Leg hier visualize cost uit uit. Wat moet je doen om het aan de praat te krijgen
 
