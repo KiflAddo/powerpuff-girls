@@ -15,21 +15,22 @@ class Grid():
         self.house_data = house_data
         self.battery_data = battery_data
 
-        # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
         self.batteries = []
         self.costs = 0
         self.shared_segments = {}
         self.batt_loc = []
         self.smallest_dict = {}
-        # self.all_cable_locations = set()
 
         self.add_houses_and_cables()
 
 
     def add_houses_and_cables(self):
-        '''get the coordinate and capacity of the house
-        save the house with it's cable in a the houses_and_cables dict'''
+        '''
+        Get the coordinate and capacity of the house
+        save the house with it's cable in a the houses_and_cables dict
+        '''
+
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = int(split_data[0])
@@ -39,15 +40,15 @@ class Grid():
             pos_x_y = (pos_x, pos_y)
             capacity = float(split_data[2])
 
-            # make a set of all house locations to prevent crossing house with cable
-            # self.house_locations.add(pos_x_y)
-
             # make a dict with cables as value for the house as key
             self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
 
     def numpy_houses(self):
-        '''creates a numpy array of the house coordinates which is used for
-        the kmeans() function'''
+        '''
+        Creates a numpy array of the house coordinates which is used for
+        the kmeans() function
+        '''
+
         arr = []
 
         # Loop over houses
@@ -61,7 +62,9 @@ class Grid():
 
 
     def add_batteries(self):
-        '''get the coordinate and capacity of the battery'''
+        '''
+        Get the coordinate and capacity of the battery
+        '''
 
         # Loop over the rows in the array containing the battery positions
         for (x, y) in self.batt_loc[0]:
@@ -75,26 +78,12 @@ class Grid():
         for battery in self.batteries:
             self.shared_segments[battery] = []
 
-    # def is_capacity_full(self, battery):
-    #     if battery.used_capacity >= battery.capacity:
-    #         battery.full = True
-
-    # def is_connected(self):
-    #     '''check if the cable is connected'''
-    #     count = 0
-    #     for house, cable in self.houses_and_cables.items():
-    #
-    #         while cable.connected == False:
-    #             cable.step()
-    #
-    #             # check if in battery coordinates
-    #             for pos_capacity in self.batteries.values():
-    #                 if pos_capacity[0] == cable.coordinates_list[-1]:
-    #                     cable.connected =  True
-
 
     def calculate_costs(self):
-        '''function to calculate the costs'''
+        '''
+        Function to calculate the costs
+        '''
+
         total_shared_cables = 0
         for battery in self.shared_segments:
             flatten = sum(self.shared_segments[battery], [])
@@ -107,7 +96,6 @@ class Grid():
         total_length = 0
         cable_cost = 0
         battery_cost = 0
-
 
         # loop through cables and add the total length, use that the calculate cable cost
         for house, cable in self.houses_and_cables.items():
@@ -124,18 +112,17 @@ class Grid():
         self.costs = cable_cost + battery_cost
 
     def visualize(self):
-        '''Plots the houses as blue squares, the batteries as red circles and
-        the cables connecting the two as green lines'''
+        '''
+        Plots the houses as blue squares, the batteries as red circles and
+        the cables connecting the two as green lines
+        '''
 
         # Plot houses and batteries
         self.plot_houses()
         self.plot_batteries()
 
-        # Create a set of battery objects
-        self.bat_object_set()
-
         # Loop over the batteries
-        for battery_kind in self.battery_objects:
+        for battery_kind in self.batteries:
 
             # Loop over the houses and batteries in 'smallest_dict'
             for house, battery in self.smallest_dict.items():
@@ -159,26 +146,29 @@ class Grid():
 
                     # Plot the cables in the right colour based on which battery
                     # they are connected to
-                    if battery == self.battery_objects[0]:
+                    if battery == self.batteries[0]:
                         plt.plot(x_coord_cable, y_coord_cable, 'g-')
 
-                    elif battery == self.battery_objects[1]:
+                    elif battery == self.batteries[1]:
                         plt.plot(x_coord_cable, y_coord_cable, 'm-')
 
-                    elif battery == self.battery_objects[2]:
+                    elif battery == self.batteries[2]:
                         plt.plot(x_coord_cable, y_coord_cable, 'c-')
 
-                    elif battery == self.battery_objects[3]:
+                    elif battery == self.batteries[3]:
                         plt.plot(x_coord_cable, y_coord_cable, 'y-')
 
-                    elif battery == self.battery_objects[4]:
+                    elif battery == self.batteries[4]:
                         plt.plot(x_coord_cable, y_coord_cable, 'k-')
 
         plt.title("Grid")
         plt.show()
 
     def plot_houses(self):
-        '''Plots the houses'''
+        '''
+        Plots the houses
+        '''
+
         x_pos_list = []
         y_pos_list = []
 
@@ -190,7 +180,10 @@ class Grid():
         self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
 
     def plot_batteries(self):
-        '''Plots the batteries'''
+        '''
+        Plots the batteries
+        '''
+
         x_pos_list_bat = []
         y_pos_list_bat = []
         colour_bat = []
@@ -204,25 +197,17 @@ class Grid():
         # Plot batteries
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
 
-    def bat_object_set(self):
-        '''Creates a set of the battery objects'''
-        self.battery_objects = set()
-        # Create a set of battery objects by looping over the keys and values
-        # in the dictionary 'smallest_dict'
-        for house, battery in self.smallest_dict.items():
-            self.battery_objects.add(battery)
-
-        # Convert set of batteries to list
-        self.battery_objects = list(self.battery_objects)
-
 
     def setup_plot(self):
-        '''Sets up the plot'''
+        '''
+        Sets up the plot
+        '''
+
         self.fig, self.ax1 = plt.subplots(1)
         self.ax1.set_aspect('equal', adjustable='box')
 
         # Initialize xticks and yticks for the grid
-        plt.xticks(list(range(0,51)), rotation=45, fontsize=7)
+        plt.xticks(list(range(0,51)))
         plt.yticks(list(range(0,51)))
 
         # Set grid
@@ -230,7 +215,10 @@ class Grid():
 
 
     def output(self):
-        '''Creates an output and pretty prints it'''
+        '''
+        Creates an output and pretty prints it
+        '''
+
         true_data = []
         dict = {"district": 1, "costs-shared": self.costs}
 
@@ -291,5 +279,10 @@ class Grid():
             pprint(true_data)
 
     def clear_objects(self):
+        '''
+        Clears battery objects when the houses need to be connected to different
+        batteries
+        '''
+
         for battery in self.batteries:
             battery.used_capacity = 0

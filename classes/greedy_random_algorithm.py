@@ -1,6 +1,3 @@
-import matplotlib.pyplot as plt
-from pprint import pprint
-import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
@@ -12,85 +9,134 @@ import numpy as np
 
 
 class Greedy_Random():
-    '''Random greedy algorithm'''
+    '''
+    This class takes a grid and applies the Greedy Random algorithm to it. It
+    computes and saves the coordinates for the cables connecting the houses
+    to their respective batteries, keeping in mind the capacity of the batteries
+    and finding the shortest route to these batteries.
+    '''
 
     def __init__(self, grid):
         self.coordinates_list = []
-
         self.grid = grid
 
 
     def step(self):
-        '''Lies the cable in random steps of 1, starting from a house
-            untill the cable is connected to a battery'''
+        '''
+        Lies the cable in steps of 1, either first all in x direction or in
+        y direction, starting from a house, untill the cable is connected to
+        a battery
+        '''
 
-        count = 0
+        # Loop over houses and batteries in the dictionary 'smallest_dict'
         for house, battery in self.grid.smallest_dict.items():
 
-            #Negative means go  left, positive means go right
-            x_steps = battery.pos_x - house.pos_x
-            y_steps = battery.pos_y - house.pos_y
+            # Find out how many steps in which direction need to be set
+            self.initialize_steps(house, battery)
 
-            # The starting positions that will be updated
-            cable_x = house.pos_x
-            cable_y = house.pos_y
+            self.cable = self.grid.houses_and_cables.get(house)
+            self.cable.coordinates_list.append((self.cable_x, self.cable_y))
 
-            # Counting steps for x and y
-            count_x = 0
-            count_y = 0
-
-            steps_needed = abs(x_steps)+abs(y_steps)
-
-
-            cable = self.grid.houses_and_cables.get(house)
-            cable.coordinates_list.append((cable_x, cable_y))
+            # Pick a random direction: 1=along x axis, 2=along y axis
+            direction = random.randint(1, 2)
 
             # Keep taking steps untill the battery is reached
-            while cable_x != battery.pos_x or cable_y != battery.pos_y:
+            while self.cable_x != battery.pos_x or self.cable_y != battery.pos_y:
 
-                # Pick a random direction: 1=along x axis, 2=along y axis
-                direction = random.randint(1, 2)
+                if direction == 1:
+                    while self.count_x < abs(self.x_steps):
+                        self.step_x(battery)
+                    while self.count_y < abs(self.y_steps):
+                        self.step_y(battery)
+
+                if direction == 2:
+                    while self.count_y < abs(self.y_steps):
+                        self.step_y(battery)
+                    while self.count_x < abs(self.x_steps):
+                        self.step_x(battery)
+
+            self.grid.shared_segments[battery].append(self.cable.coordinates_list)
+
+    def initialize_steps(self, house, battery):
+        '''
+        Initializes how many steps need to be set in both the x and the y
+        direction for the house to be connected to the battery
+        :Param
+            house: house object being looped over
+            battery: battery object being looped over
+        '''
+        # Negative means go  left, positive means go right
+        self.x_steps = battery.pos_x - house.pos_x
+        self.y_steps = battery.pos_y - house.pos_y
+
+        # The starting positions that will be updated
+        self.cable_x = house.pos_x
+        self.cable_y = house.pos_y
+
+        # Counting steps for x and y
+        self.count_x = 0
+        self.count_y = 0
 
 
-                if direction == 1 and count_x < abs(x_steps):
+    def step_x(self, battery):
+        '''
+        Sets a step in the x direction, saves the coordinate to the list of
+        cable coordinates
+        :Param
+            battery: battery object being looped over
+        '''
+        # Check if the value is positive and if the possible
+        if self.x_steps > 0:
+            # Change x-coord
+            self.cable_x += 1
+            self.count_x += 1
 
-                    # Check if the value is positive and if the possible
-                    if x_steps > 0:
-                        cable_x += 1
-                        count_x += 1
-                        cable_coordinate = (cable_x, cable_y)
-                        cable.coordinates_list.append(cable_coordinate)
+            # Save new coordinate to list of cable coordinates
+            cable_coordinate = (self.cable_x, self.cable_y)
+            self.cable.coordinates_list.append(cable_coordinate)
 
-                    else:
-                        cable_x -= 1
-                        count_x += 1
-                        cable_coordinate = (cable_x, cable_y)
-                        cable.coordinates_list.append(cable_coordinate)
+        else:
+            # Change x_coord
+            self.cable_x -= 1
+            self.count_x += 1
 
-                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
+            # Save new coordinate to list of cable coordinates
+            cable_coordinate = (self.cable_x, self.cable_y)
+            self.cable.coordinates_list.append(cable_coordinate)
 
-                if direction == 2 and count_y < abs(y_steps):
 
-                    # Check if the value is negative or positive
-                    if y_steps > 0:
-                        cable_y += 1
-                        count_y += 1
-                        cable_coordinate = (cable_x, cable_y)
-                        cable.coordinates_list.append(cable_coordinate)
+    def step_y(self, battery):
+        '''
+        Sets a step in the y direction, saves the coordinate to the list of
+        cable coordinates
+        :Param
+            battery: battery object being looped over
+        '''
+        # Check if the value is positive
+        if self.y_steps > 0:
+            # Change y-coord
+            self.cable_y += 1
+            self.count_y += 1
 
-                    else:
-                        cable_y -= 1
-                        count_y += 1
-                        cable_coordinate = (cable_x, cable_y)
-                        cable.coordinates_list.append(cable_coordinate)
+            # Save new coordinate to list of cable coordinates
+            cable_coordinate = (self.cable_x, self.cable_y)
+            self.cable.coordinates_list.append(cable_coordinate)
 
-                    # If the cable segment is placed on an already existing cable segment you add +1 to the shared segments
-            self.grid.shared_segments[battery].append(cable.coordinates_list)
+        else:
+            # Change y-coord
+            self.cable_y -= 1
+            self.count_y += 1
+
+            # Save new coordinate to list of cable coordinates
+            cable_coordinate = (self.cable_x, self.cable_y)
+            self.cable.coordinates_list.append(cable_coordinate)
 
 
 
     def manhattan_distance(self, x1, y1, x2, y2):
-        '''function that calculates the manhatten distance'''
+        '''
+        Function that calculates the manhatten distance
+        '''
         x_distance = abs(x1 - x2)
         y_distance = abs(y1 - y2)
 
@@ -100,7 +146,9 @@ class Greedy_Random():
 
 
     def smallest_distance(self):
-        ''''Calculates the battery with the smallest distance from a house'''
+        ''''
+        Calculates the battery with the smallest distance from a house
+        '''
         while len(self.grid.smallest_dict) < 150:
 
             # Shuffle keys
@@ -134,8 +182,10 @@ class Greedy_Random():
 
 
     def kmeans(self):
-        '''Partitions the houses into 5 clusters where each datapoint belongs
-        to the cluster with the nearest mean'''
+        '''
+        Partitions the houses into 5 clusters where each datapoint belongs
+        to the cluster with the nearest mean
+        '''
         data = self.grid.numpy_houses()
 
         # Use the sklearn package KMeans to assign the batteries the optimal
@@ -149,8 +199,10 @@ class Greedy_Random():
         self.grid.batt_loc.append(battery_coords)
 
     def run(self, visualize=False, output=False):
-        '''Function that calls on each function needed for a single succesfull
-        run of the algorithm'''
+        '''
+        Function that calls on each function needed for a single succesfull
+        run of the algorithm
+        '''
         self.kmeans()
         self.grid.add_batteries()
         self.smallest_distance()

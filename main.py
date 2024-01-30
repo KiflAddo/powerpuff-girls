@@ -17,15 +17,17 @@ from classes.hill_climber import Hill_Climber
 
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/district_1/district-1_batteries.csv')
+    batteries = access_data('huizen_batterijen/district_3/district-3_batteries.csv')
 
-    houses = access_data('huizen_batterijen/district_1/district-1_houses.csv')
+    houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
 
     # experiments(100)
     grid = Grid(houses, batteries)
     algorithm = Greedy_Random(grid)
-    greedy_random_grid = algorithm.run()
+    greedy_random_grid = algorithm.run(visualize=True)
+    # experiments(1000, Greedy_Random, houses, batteries)
 
-    hill = Hill_Climber(greedy_random_grid)
-    hill.run()
-    hill.visualize('figures/hill_climber-1')
+    # hill = Hill_Climber(greedy_random_grid)
+    # hill.run()
+    # hill.visualize('figures/hill_climber-1')
+    # visualize_cost('results.csv', 'figures/district_3_kmeans')
