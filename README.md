@@ -59,6 +59,10 @@ Dit constructieve algoritme neemt een grid en legt een kabel in random stappen n
 
 #### `greedy_random_k_means`: 
 Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. In dit algoritme moeten de locaties van de batterij nog gekozen worden. Hiervoor gebruiken we een heuristiek. Deze gaat er van uit dat huizen die dicht bij elkaar liggen zo veel mogelijk aan dezelfde batterij verbonden worden om kabelkosten per segment te besparen. De huizen worden door K-Means in clusters opgedeeld die volgens de euclidische afstand het dichtst bij elkaar liggen. De batterijen liggen nu midden in deze clusters. Hierna wordt greedy_random gebruikt om de batterijen met de kortste Manhatten_distance van de huizen aan deze huizen te verbinden met kabels.
+Kmeans zal warnings geven. Om ze te verwerken type je:
+``` python
+```
+
 
 #### `hill_climber`: 
 Dit iteratieve algoritme krijgt als input een grid en probeert de kosten te verlagen van dit grid. Het doet een aantal iteraties. Bij elke iteratie pakt het een random kabel en legt deze opnieuw aan. Als dit leid tot kostenverlaging wordt de oude kabel vervangen met deze betere kabel.
