@@ -47,15 +47,15 @@ class Greedy_Random():
 
                 if direction == 1:
                     while self.count_x < abs(self.x_steps):
-                        self.step_x(battery)
+                        self.step_x()
                     while self.count_y < abs(self.y_steps):
-                        self.step_y(battery)
+                        self.step_y()
 
                 if direction == 2:
                     while self.count_y < abs(self.y_steps):
-                        self.step_y(battery)
+                        self.step_y()
                     while self.count_x < abs(self.x_steps):
-                        self.step_x(battery)
+                        self.step_x()
 
             self.grid.shared_segments[battery].append(self.cable.coordinates_list)
 
@@ -80,12 +80,10 @@ class Greedy_Random():
         self.count_y = 0
 
 
-    def step_x(self, battery):
+    def step_x(self):
         '''
         Sets a step in the x direction, saves the coordinate to the list of
         cable coordinates
-        :Param
-            battery: battery object being looped over
         '''
         # Check if the value is positive and if the possible
         if self.x_steps > 0:
@@ -93,26 +91,18 @@ class Greedy_Random():
             self.cable_x += 1
             self.count_x += 1
 
-            # Save new coordinate to list of cable coordinates
-            cable_coordinate = (self.cable_x, self.cable_y)
-            self.cable.coordinates_list.append(cable_coordinate)
-
         else:
             # Change x_coord
             self.cable_x -= 1
             self.count_x += 1
 
-            # Save new coordinate to list of cable coordinates
-            cable_coordinate = (self.cable_x, self.cable_y)
-            self.cable.coordinates_list.append(cable_coordinate)
+        self.save_coord()
 
 
-    def step_y(self, battery):
+    def step_y(self):
         '''
         Sets a step in the y direction, saves the coordinate to the list of
         cable coordinates
-        :Param
-            battery: battery object being looped over
         '''
         # Check if the value is positive
         if self.y_steps > 0:
@@ -120,19 +110,20 @@ class Greedy_Random():
             self.cable_y += 1
             self.count_y += 1
 
-            # Save new coordinate to list of cable coordinates
-            cable_coordinate = (self.cable_x, self.cable_y)
-            self.cable.coordinates_list.append(cable_coordinate)
-
         else:
             # Change y-coord
             self.cable_y -= 1
             self.count_y += 1
 
-            # Save new coordinate to list of cable coordinates
-            cable_coordinate = (self.cable_x, self.cable_y)
-            self.cable.coordinates_list.append(cable_coordinate)
+        self.save_coord()
 
+
+    def save_coord(self):
+        '''
+        Save new coordinate to list of cable coordinates
+        '''
+        cable_coordinate = (self.cable_x, self.cable_y)
+        self.cable.coordinates_list.append(cable_coordinate)
 
 
     def manhattan_distance(self, x1, y1, x2, y2):
