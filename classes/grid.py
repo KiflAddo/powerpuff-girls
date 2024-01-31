@@ -10,18 +10,18 @@ from collections import Counter
 
 class Grid():
     '''
-    This class keeps track of the grid and all the changes
-    made in the grid with the use of the algorithms
+    This class takes two data files, one containing information about houses
+    and one containing information about batteries, and makes each item an
+    object. It visualizes these objects in a grid. This class keeps track of the
+    grid and all the changes made in the grid with the use of the algorithms.
     '''
 
     def __init__(self, house_data, battery_data):
         self.house_data = house_data
         self.battery_data = battery_data
 
-        # all house locations (to prevemt crossing later)
         self.house_locations = set()
 
-        # house = key, cables = value as list of coordinates
         self.houses_and_cables = {}
         self.batteries = []
         self.costs = 0
@@ -38,7 +38,6 @@ class Grid():
         get the coordinate and capacity of the houses
         save the houses with it's cable in a the houses_and_cables dict
         '''
-
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = int(split_data[0])
@@ -79,7 +78,6 @@ class Grid():
         '''
         function to calculate the costs
         '''
-
         total_shared_cables = 0
         for battery in self.shared_segments:
             flatten = sum(self.shared_segments[battery], [])
@@ -113,7 +111,57 @@ class Grid():
         Plots the houses as blue squares, the batteries as red circles and
         the cables connecting the two as green lines
         '''
+        # Plot houses and batteries
+        self.plot_houses()
+        self.plot_batteries()
 
+        # Loop over the batteries
+        for battery_kind in self.batteries:
+
+            # Loop over the houses and batteries in 'smallest_dict'
+            for house, battery in self.smallest_dict.items():
+                # Determine if 'battery' is the same as 'battery_kind' so only
+                # the cables connecting the houses assigned to one specific
+                # battery are plotted
+                if battery == battery_kind:
+                    cable = self.houses_and_cables.get(house)
+
+                    x_coord_cable = []
+                    y_coord_cable = []
+
+                    for coord in cable.coordinates_list:
+                        # Save the x_coordinate of one cable section to the list
+                        # x_coord_cable
+                        x_coord_cable.append(coord[0])
+
+                        # Save the y_coordinate of one cable section to the list
+                        # y_coord_cable
+                        y_coord_cable.append(coord[1])
+
+                    # Plot the cables in the right colour based on which battery
+                    # they are connected to
+                    if battery == self.batteries[0]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'g-')
+
+                    elif battery == self.batteries[1]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'm-')
+
+                    elif battery == self.batteries[2]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'c-')
+
+                    elif battery == self.batteries[3]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'y-')
+
+                    elif battery == self.batteries[4]:
+                        plt.plot(x_coord_cable, y_coord_cable, 'k-')
+
+        plt.title("Grid")
+        plt.show()
+
+    def plot_houses(self):
+        '''
+        Plots the houses
+        '''
         x_pos_list = []
         y_pos_list = []
 
@@ -122,7 +170,12 @@ class Grid():
             x_pos_list.append(int(house.pos_x))
             y_pos_list.append(int(house.pos_y))
 
+        self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
 
+    def plot_batteries(self):
+        '''
+        Plots the batteries
+        '''
         x_pos_list_bat = []
         y_pos_list_bat = []
         colour_bat = []
@@ -133,37 +186,8 @@ class Grid():
             y_pos_list_bat.append(int(battery.pos_y))
             colour_bat.append('r')
 
-        # Plot houses and batteries
-        self.ax1.scatter(x_pos_list, y_pos_list, marker='s')
+        # Plot batteries
         self.ax1.scatter(x_pos_list_bat, y_pos_list_bat, c=colour_bat)
-
-        # Initialize xticks and yticks for the grid
-        plt.xticks(list(range(0,51)))
-        plt.yticks(list(range(0,51)))
-
-        # Set grid
-        self.ax1.grid()
-
-        # Loop over houses and cables
-        for house, cable in self.houses_and_cables.items():
-            x_coord_cable = []
-            y_coord_cable = []
-
-            # Loop over coordinates of the cables of one house
-            for coord in cable.coordinates_list:
-
-                # Save the x_coordinate of one cable section to the list
-                # x_coord_cable
-                x_coord_cable.append(coord[0])
-
-                # Save the y_coordinate of one cable section to the list
-                # y_coord_cable
-                y_coord_cable.append(coord[1])
-
-            # Plot the cable connection the house to a battery
-            plt.plot(x_coord_cable, y_coord_cable, 'g-')
-
-        plt.show()
 
 
     def setup_plot(self):
@@ -171,7 +195,14 @@ class Grid():
         Sets up the plot
         '''
         self.fig, self.ax1 = plt.subplots(1)
+        self.ax1.set_aspect('equal', adjustable='box')
 
+        # Initialize xticks and yticks for the grid
+        plt.xticks(list(range(0,51)))
+        plt.yticks(list(range(0,51)))
+
+        # Set grid
+        self.ax1.grid()
 
     def output(self):
         '''
@@ -241,6 +272,5 @@ class Grid():
         Clears battery objects when the houses need to be connected to different
         batteries
         '''
-
         for battery in self.batteries:
             battery.used_capacity = 0
