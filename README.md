@@ -64,6 +64,7 @@ Kmeans zal warnings geven. Om ze te verwijderen type je in je terminal:
 ``` python
 OMP_NUM_THREADS=1 
 ```
+Doe dit voordat je `main.py` functie aanroept
 
 
 #### `hill_climber`: 
