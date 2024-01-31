@@ -180,4 +180,4 @@ class Hill_Climber():
         if output == True:
             self.grid.output()
 
-        print(self.grid.costs)
+        return self.grid

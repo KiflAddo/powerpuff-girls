@@ -15,6 +15,7 @@ import pandas as pd
 from pprint import pprint
 import csv
 from tqdm import tqdm
+import numpy as np
 
 
 
@@ -22,6 +23,7 @@ def experiments(number_of_experiments, algorithm, district, file_name, N=3000):
     '''Function that takes an algorithm as input, runs it N times and save the results to a csv '''
 
     results = {}
+    last_cost = np.inf
 
     # Do the experiment N times
     for experiment in tqdm(range(1, number_of_experiments + 1)):

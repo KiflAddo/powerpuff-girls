@@ -50,6 +50,7 @@ def run_algorithm(algorithm, district, visualize=False, output=False, experiment
     else:
         new_grid = test_algorithm.run(visualize, output)
 
+
     # returns the grid in case this function is used for experiments
     if experiment == True:
         return new_grid
