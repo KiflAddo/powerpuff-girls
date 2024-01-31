@@ -44,7 +44,7 @@ run_algorithm(Hill_Climber, 1, visualize=True)
 De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
 
 #### `experiment.py`
-De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
+De experiment() functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
 - `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
