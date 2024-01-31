@@ -10,6 +10,7 @@ from sklearn.cluster import KMeans
 import numpy as np
 import copy
 from matplotlib import pyplot as plt
+from tqdm import tqdm
 
 
 
@@ -33,8 +34,7 @@ class Hill_Climber():
         house_keys = list(self.grid.houses_and_cables.keys())
 
 
-        for iteration in range(N):
-            print(iteration)
+        for iteration in tqdm(range(N)):
 
             # calculate the old cost before taking a different path
             self.grid.calculate_costs()
