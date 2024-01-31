@@ -18,7 +18,7 @@ from tqdm import tqdm
 
 
 
-def experiments(number_of_experiments, algorithm, houses, batteries, file_name, N=3000):
+def experiments(number_of_experiments, algorithm, district, file_name, N=3000):
     '''Function that takes an algorithm as input, runs it N times and save the results to a csv '''
 
     results = {}
@@ -29,7 +29,7 @@ def experiments(number_of_experiments, algorithm, houses, batteries, file_name, 
         battery_locations = set()
 
         # runs a specified algorithm
-        new_grid = run_algorithm(algorithm, houses, batteries, experiment=True)
+        new_grid = run_algorithm(algorithm, district, experiment=True)
 
         # loop through all battery locations and add them to the dictionary
         for battery in new_grid.batteries:

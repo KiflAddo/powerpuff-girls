@@ -16,10 +16,15 @@ from sklearn.cluster import KMeans
 import numpy as np
 from classes.hill_climber import Hill_Climber
 
-def run_algorithm(algorithm, houses, batteries, visualize=False, output=False, experiment=False):
+def run_algorithm(algorithm, district, visualize=False, output=False, experiment=False):
     '''
     This function runs an algorithm specified in the input
     '''
+
+    # acces the data from a specified district
+    batteries = access_data(f'huizen_batterijen/district_{district}/district-{district}_batteries.csv')
+
+    houses = access_data(f'huizen_batterijen/district_{district}/district-{district}_houses.csv')
 
     # initialize the start grid for Hill_Climber
     if algorithm == Hill_Climber:
