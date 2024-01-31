@@ -29,14 +29,19 @@ Je runt de Main door in je terminal `python main.py` te typen.
 Nu kan je ook python code typen
 ```
 
-`main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
+In de main.py zijn er twee functies doe aangeroepen kunnen worden. De eerste functie is de 'run_algorithm' functie.  Deze krijgt de volgende parameters mee:
+- `algorithm`: Met deze parameter kies je welk algoritme je wilt runnen. Je hebt de keuze uit Greedy_Random, Greedy_Random_kmeans en Hill_Climber
+- `district`: Keuze uit de verschillende districten. Dit kan dus 1, 2, of 3 zijn.
+- `visualize`: Boolean die, wanneer hij op True staat, De grid visualiseert
+- `output`: Boolean die, wanneer hij op True staat, de output print
+- `experiment`: Dit parameter hoeft niet aangepast te worden, het is puur zodat we deze functie in experiment kunnen runnen.
+
+De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
 
 #### `experiment.py`
 De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
-- `algoritme`: Keuze uit de twee algoritmen: Greedy_Random of Greedy_Random_kmeans, zelf invullen
-- `houses`: De informatie van de huizen
-- `batteries`: De informatie van de batterijen
+- `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
 
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
