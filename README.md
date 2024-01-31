@@ -16,11 +16,9 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 
 - `classes`:            Hierin staan alle classes en algoritmen
 - `figures`:            Hier worden alle plots van visualize cost opgeslagen EN OOK DIE VAN HILLCLIMBER COST DECREASE
+- `functies`:           Hierin staan alle functies die `main.py` nodig heeft
 - `huizen_batterijen`:  De data van de grids waarmee we werken
-- `access_data.py`:     Leest de csv met info voor de grid
 - `main.py`:            Hier roep je alle functies en de verschillende algoritmen aan
-- `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
-- `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
 - `results.csv`:        Hier worden de kosten die uit ecperiment komen opgeslagen.
 
 #### `main.py`
@@ -36,7 +34,13 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 
    Deze functie returnt niks.
 
-Een voorbeeld van run_algorithm:
+### functies
+- `run_all.py`: runt alle functies
+- `access_data.py`:     Leest de csv met info voor de grid
+- `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
+- `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
+
+
 ``` python
 run_algorithm(Hill_Climber, 1, visualize=True)
 ```
