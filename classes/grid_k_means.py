@@ -9,7 +9,7 @@ from collections import Counter
 
 class Grid_kmeans():
     '''
-    This class takes two data files, one containing information about houses 
+    This class takes two data files, one containing information about houses
     and one containing information about batteries, and makes each item an
     object. It visualizes these objects in a grid. This class keeps track of the
     grid and all the changes made in the grid with the use of the algorithms.
@@ -40,11 +40,11 @@ class Grid_kmeans():
             pos_y = int(split_data[1])
 
             # make it one coordinate
-            pos_x_y = (pos_x, pos_y)
+            # pos_x_y = (pos_x, pos_y)
             capacity = float(split_data[2])
 
             # make a dict with cables as value for the house as key
-            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
+            self.houses_and_cables[House(pos_x, pos_y, capacity)] = Cables()
 
     def numpy_houses(self):
         '''
@@ -71,11 +71,10 @@ class Grid_kmeans():
         for (x, y) in self.batt_loc[0]:
             pos_x = x
             pos_y = y
-            pos_x_y = (x, y)
             capacity = float(1507)
 
             # Instantiate the batteries as an object
-            self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
+            self.batteries.append(Battery(pos_x, pos_y, capacity))
         for battery in self.batteries:
             self.shared_segments[battery] = []
 

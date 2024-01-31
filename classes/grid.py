@@ -51,7 +51,7 @@ class Grid():
             self.house_locations.add(pos_x_y)
 
             # make a dict with cables as value for the house as key
-            self.houses_and_cables[House(pos_x, pos_y, pos_x_y, capacity)] = Cables(pos_x, pos_y)
+            self.houses_and_cables[House(pos_x, pos_y, capacity)] = Cables()
 
 
     def add_batteries(self):
@@ -68,7 +68,7 @@ class Grid():
             # make it one coordinate
             pos_x_y = (pos_x, pos_y)
             capacity = float(true_data[2])
-            self.batteries.append(Battery(pos_x, pos_y, pos_x_y, capacity))
+            self.batteries.append(Battery(pos_x, pos_y, capacity))
         for battery in self.batteries:
             self.shared_segments[battery] = []
 
