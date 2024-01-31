@@ -39,7 +39,7 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 - `access_data.py`:     Leest de csv met info voor de grid
 - `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
-- `run_all.py`: Met deze functie kies je makkelijk een algoritme om te runnen en of je het grid wil plotten
+- `run_all.py`: Met deze functie kies je makkelijk een algoritme om te runnen, het bijbehorende grid plotten en de output printen
 
 #### `access_data.py`
 ```python
@@ -54,6 +54,7 @@ experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
 De experiment() functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
 - `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
+- `District` : Keuze tussen de 3 districten die je kan gebruiken. Input kan dus 1, 2 of 3 zijn
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
 
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
@@ -62,7 +63,7 @@ De output van experiments is een csv file, `results.csv` met kosten voor elk gri
 ``` python
 visualize_cost('results.csv', 'figures/district_3_kmeans.png')
 ```
-De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
+De `visualize_cost()` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
 - `results.csv`: Een csv, de output van experiments
 - `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
 
@@ -71,8 +72,7 @@ De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de koste
 ``` python
 run_algorithm(Hill_Climber, 1, visualize=True)
 ```
-
-
+Met de run_algorithm functie kan je kiezen welk algoritme je wilt runnen in combinatie met welk district. Vervolgens kan je ook kiezen of je de bijbehorende grid wilt visualizen en of je de output van deze grid wild printen. 
 
 ## Classes
 In classes staan alle classes en algoritmen.
