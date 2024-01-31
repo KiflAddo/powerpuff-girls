@@ -8,3 +8,4 @@ All Dependencies:
 - Counter (from collections)
 - Kmeans (from sklearn.cluster). Zie README. Om warnings te voorkomen type: OMP_NUM_THREADS=1 voordat je de main functie aanroept in terminal.
 - copy
+- tqdm
