@@ -28,18 +28,18 @@ def run_algorithm(algorithm, district, visualize=False, output=False, experiment
 
     # initialize the start grid for Hill_Climber
     if algorithm == Hill_Climber:
-        start_grid = Grid_kmeans(houses, batteries)
+        start_grid = Grid_kmeans(houses, batteries, district)
         start_algorithm = Greedy_Random_kmeans(start_grid)
         grid = start_algorithm.run()
 
     #  initialize the start grid for kmeans
     elif algorithm == Greedy_Random_kmeans:
 
-        grid = Grid_kmeans(houses, batteries)
+        grid = Grid_kmeans(houses, batteries, district)
 
     # initialize the start grid for Greedy_Random
     else:
-        grid = Grid(houses, batteries)
+        grid = Grid(houses, batteries, district)
 
     # Initialize the algorithm
     test_algorithm = algorithm(grid)

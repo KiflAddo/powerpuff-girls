@@ -16,9 +16,10 @@ class Grid():
     grid and all the changes made in the grid with the use of the algorithms.
     '''
 
-    def __init__(self, house_data, battery_data):
+    def __init__(self, house_data, battery_data, district, add_batteries=True):
         self.house_data = house_data
         self.battery_data = battery_data
+        self.district = district
 
         self.house_locations = set()
 
@@ -28,7 +29,8 @@ class Grid():
         self.shared_segments = {}
         self.smallest_dict = {}
         self.add_houses_and_cables()
-        self.add_batteries()
+        if add_batteries:
+            self.add_batteries()
 
 
 
@@ -209,7 +211,7 @@ class Grid():
         Prints the output of the grid in the correct format
         '''
         true_data = []
-        dict = {"district": 1, "costs-shared": self.costs}
+        dict = {"district": self.district, "costs-shared": self.costs}
 
         true_data.append(dict)
         data = {}

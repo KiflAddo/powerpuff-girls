@@ -16,8 +16,8 @@ class Grid_kmeans(Grid):
     grid and all the changes made in the grid with the use of the algorithms.
     '''
 
-    def __init__(self, house_data, battery_data):
-        super().__init__(house_data, battery_data)
+    def __init__(self, house_data, battery_data, district):
+        super().__init__(house_data, battery_data, district, add_batteries=False)
         self.batt_loc = []
 
     def numpy_houses(self):
