@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from pprint import pprint
-import re
 from classes.house import House
 from classes.battery import Battery
 from classes.cables import Cables
@@ -9,7 +8,6 @@ from classes.grid_k_means import Grid_kmeans
 from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
 from functies.access_data import access_data
-import sys
 import pandas as pd
 from sklearn.cluster import KMeans
 import numpy as np

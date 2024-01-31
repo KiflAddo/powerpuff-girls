@@ -10,7 +10,6 @@ from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
 from classes.hill_climber import Hill_Climber
 from functies.run_all import run_algorithm
-import sys
 import pandas as pd
 from pprint import pprint
 import csv
