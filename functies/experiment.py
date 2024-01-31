@@ -9,7 +9,7 @@ from classes.grid_k_means import Grid_kmeans
 from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
 from classes.hill_climber import Hill_Climber
-from run_all import run_algorithm
+from functies.run_all import run_algorithm
 import sys
 import pandas as pd
 from pprint import pprint

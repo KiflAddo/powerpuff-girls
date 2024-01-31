@@ -16,7 +16,7 @@ class Grid_kmeans(Grid):
     grid and all the changes made in the grid with the use of the algorithms.
     '''
 
-    def __init__(self, house_data, battery_data, district):
+    def __init__(self, house_data, battery_data, district, add_batteries=False):
         super().__init__(house_data, battery_data, district, add_batteries=False)
         self.batt_loc = []
 
@@ -35,3 +35,18 @@ class Grid_kmeans(Grid):
         # Convert the list 'arr' to a numpy array
         array = np.array(arr)
         return array
+
+    def add_batteries(self):
+        '''
+        Get the coordinate and capacity of the battery
+        '''
+        # Loop over the rows in the array containing the battery positions
+        for (x, y) in self.batt_loc[0]:
+            pos_x = x
+            pos_y = y
+            capacity = float(1507)
+
+            # Instantiate the batteries as an object
+            self.batteries.append(Battery(pos_x, pos_y, capacity))
+        for battery in self.batteries:
+            self.shared_segments[battery] = []

@@ -8,27 +8,31 @@ from classes.greedy_random_kmeans import Greedy_Random_kmeans
 from classes.grid_k_means import Grid_kmeans
 from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
-from access_data import access_data
-from experiment import experiments
-from visualize_cost import visualize_cost
+from functies.access_data import access_data
+from functies.experiment import experiments
+from functies.visualize_cost import visualize_cost
 import sys
 import pandas as pd
 from sklearn.cluster import KMeans
 import numpy as np
 from classes.hill_climber import Hill_Climber
+from functies.run_all import run_algorithm
 
 
 if __name__ == "__main__":
-    batteries = access_data('huizen_batterijen/district_3/district-3_batteries.csv')
+    # batteries = access_data(f'huizen_batterijen/district_{1}/district-{1}_batteries.csv')
+    #
+    # houses = access_data(f'huizen_batterijen/district_{1}/district-{1}_houses.csv')
 
-    houses = access_data('huizen_batterijen/district_3/district-3_houses.csv')
-
-    # grid = Grid(houses, batteries)
-    # algorithm = Greedy_Random(grid)
-    # greedy_random_grid = algorithm.run(visualize=True)
-    experiments(10, Greedy_Random, houses, batteries, 'Testing')
+    # grid = Grid_kmeans(houses, batteries)
+    # algorithm = Greedy_Random_kmeans(grid)
+    # greedy_random_grid = algorithm.run()
+    # experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
+    # visualize_cost('results.csv', 'test_hill')
 
     # hill = Hill_Climber(greedy_random_grid)
-    # hill.run()
+    # hill.run(visualize=True, output=True)
+    # print(hill.all_costs)
     # hill.visualize('figures/hill_climber-1')
-    # visualize_cost('results.csv', 'figures/district_3_kmeans')
+
+    # run_algorithm(Hill_Climber, 1, visualize=True)

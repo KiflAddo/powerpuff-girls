@@ -8,8 +8,7 @@ from classes.greedy_random_kmeans import Greedy_Random_kmeans
 from classes.grid_k_means import Grid_kmeans
 from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
-from access_data import access_data
-from visualize_cost import visualize_cost
+from functies.access_data import access_data
 import sys
 import pandas as pd
 from sklearn.cluster import KMeans
