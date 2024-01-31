@@ -53,11 +53,14 @@ De eenvoudige classes zijn:
 - `Grid_k_means`: Een aangepaste grid voor het algoritme kmeansdie een numpy array maakt van de huiscoordinaten. 
 
 ### Algoritmen:
-#### `greedy_random`: Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. Het berekend eerst welke batterij de kleinste Manhattan distance heeft van de huizen. Deze huizen worden met die huizen verbonden zo lang de capaciteit van de batterij niet oeverschreden wordt. Omdat de huizen niet met random batterijen verbonden worden maar met de dihtstbijzijnde batterij met voldoende capaciteit is het greedy. De stappen die de kabel legt zijn elke stap random in de x of de y richting totdat de batterij bereikt is.
+#### `greedy_random`: 
+Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. Het berekend eerst welke batterij de kleinste Manhattan distance heeft van de huizen. Deze huizen worden met die huizen verbonden zo lang de capaciteit van de batterij niet oeverschreden wordt. Omdat de huizen niet met random batterijen verbonden worden maar met de dihtstbijzijnde batterij met voldoende capaciteit is het greedy. De stappen die de kabel legt zijn elke stap random in de x of de y richting totdat de batterij bereikt is.
 
-#### `greedy_random_k_means`: Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. In dit algoritme moeten de locaties van de batterij nog gekozen worden. Hiervoor gebruiken we een heuristiek. Deze gaat er van uit dat huizen die dicht bij elkaar liggen zo veel mogelijk aan dezelfde batterij verbonden worden om kabelkosten per segment te besparen. De huizen worden door K-Means in clusters opgedeeld die volgens de euclidische afstand het dichtst bij elkaar liggen. De batterijen liggen nu midden in deze clusters. Hierna wordt greedy_random gebruikt om de batterijen met de kortste Manhatten_distance van de huizen aan deze huizen te verbinden met kabels.
+#### `greedy_random_k_means`: 
+Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. In dit algoritme moeten de locaties van de batterij nog gekozen worden. Hiervoor gebruiken we een heuristiek. Deze gaat er van uit dat huizen die dicht bij elkaar liggen zo veel mogelijk aan dezelfde batterij verbonden worden om kabelkosten per segment te besparen. De huizen worden door K-Means in clusters opgedeeld die volgens de euclidische afstand het dichtst bij elkaar liggen. De batterijen liggen nu midden in deze clusters. Hierna wordt greedy_random gebruikt om de batterijen met de kortste Manhatten_distance van de huizen aan deze huizen te verbinden met kabels.
 
-#### `hill_climber`: Dit iteratieve algoritme krijgt als input een grid en probeert de kosten te verlagen van dit grid. Het doet een aantal iteraties. Bij elke iteratie pakt het een random kabel en legt deze opnieuw aan. Als dit leid tot kostenverlaging wordt de oude kabel vervangen met deze betere kabel.
+#### `hill_climber`: 
+Dit iteratieve algoritme krijgt als input een grid en probeert de kosten te verlagen van dit grid. Het doet een aantal iteraties. Bij elke iteratie pakt het een random kabel en legt deze opnieuw aan. Als dit leid tot kostenverlaging wordt de oude kabel vervangen met deze betere kabel.
 
 
 
