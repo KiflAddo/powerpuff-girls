@@ -71,7 +71,7 @@ De eenvoudige classes zijn:
 - `Battery`: Krijgt `pos_x`, `pos_y`, `capacity` mee en heeft ook een `used_capacity` die op 0 staat aan het begin.
 - `Cables`: Kan een lijst aan coordinaten opslaan. Dit is een kabel
 - `Grid`: Grid simuleert een heel aangelegd grid van kabel batterijen en huizen. Deze grid wordt gebruikt voor ons `greedy_random` algoritme
-- `Grid_k_means`: Een aangepaste grid voor het algoritme kmeans. Hij inherit grid en voegt een fucntie toe die een numpy array maakt van de huiscoordinaten.
+- `Grid_k_means`: Een aangepaste grid voor het algoritme `greedy_random_k_means`. Hij inherit grid en voegt een fucntie toe die een numpy array maakt van de huiscoordinaten.
 
 ### Algoritmen:
 #### `greedy_random`: 
