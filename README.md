@@ -45,27 +45,24 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
 
 #### `experiment.py`
+``` python
+    experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
+```
 De experiment() functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
 - `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
 
-   Deze functie returnt niks.
-
-  Een voorbeeld van experiment:
-``` python
-    experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
-```
-
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
 
 #### `visualize_cost.py` 
-De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
-- `results.csv`: Een csv, de output van experiments
-- `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
 ``` python
 visualize_cost('results.csv', 'figures/district_3_kmeans.png')
 ```
+De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
+- `results.csv`: Een csv, de output van experiments
+- `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
+
 
 #### `run_all.py`
 ``` python
