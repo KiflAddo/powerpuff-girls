@@ -32,7 +32,7 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 - `district`: Keuze uit de verschillende districten. Dit kan dus 1, 2, of 3 zijn.
 - `visualize`: Boolean die, wanneer hij op True staat, De grid visualiseert
 - `output`: Boolean die, wanneer hij op True staat, de output print
-- `experiment`: Dit parameter hoeft niet aangepast te worden, het is puur zodat we deze functie in experiment kunnen runnen.
+- `experiment`: Dit parameter hoeft niet aangepast te worden, het is puur zodat we deze functie in experiment() kunnen runnen.
 
    Deze functie returnt niks.
 
