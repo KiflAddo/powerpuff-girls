@@ -31,9 +31,13 @@ Je runt de Main door in je terminal `python main.py` te typen.
 `main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
 
 ## Leg hier experiment uit. Wat moet je doen om het aan de praat te krijgen
-De `experiment` functie wordt aangeroepen en krijgt de volgende parameters meegegeven:
-iteraties=eigen input, algoritme=Greedy_Random of Greedy_Random_kmeans, houses=houses, batteries=batteries, file_name='eigen input'.
-Deze functie moet in de main worden aangeroepen en vervolgens voer je dus de main uit.
+De `experiment` functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
+- `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
+- `algoritme`: Keuze uit de twee algoritmen: Greedy_Random of Greedy_Random_kmeans, zelf invullen
+- `houses`: De informatie van de huizen
+- `batteries`: De informatie van de batterijen
+- `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
+
 
 
 ## Leg hier visualize cost uit uit. Wat moet je doen om het aan de praat te krijgen
