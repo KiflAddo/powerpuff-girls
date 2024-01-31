@@ -8,6 +8,8 @@ from classes.greedy_random_kmeans import Greedy_Random_kmeans
 from classes.grid_k_means import Grid_kmeans
 from classes.grid import Grid
 from classes.greedy_random import Greedy_Random
+from classes.hill_climber import Hill_Climber
+from run_all import run_algorithm
 import sys
 import pandas as pd
 from pprint import pprint
@@ -16,7 +18,7 @@ from tqdm import tqdm
 
 
 
-def experiments(number_of_experiments, algorithm, houses, batteries, file_name):
+def experiments(number_of_experiments, algorithm, houses, batteries, file_name, N=3000):
     '''Function that takes an algorithm as input, runs it N times and save the results to a csv '''
 
     results = {}
@@ -26,24 +28,13 @@ def experiments(number_of_experiments, algorithm, houses, batteries, file_name):
         experiment_dict = {}
         battery_locations = set()
 
-        # choose which grid you want to initialize
-        if algorithm == Greedy_Random_kmeans:
-            # Initialize the grid
-            grid = Grid_kmeans(houses, batteries)
-        else:
-            grid = Grid(houses, batteries)
-
-        # Initialzie the algorithm
-        test_algorithm = algorithm(grid)
-
-        # run the algorithm
-        new_grid = test_algorithm.run()
-
+        # runs a specified algorithm
+        new_grid = run_algorithm(algorithm, houses, batteries, experiment=True)
 
         # loop through all battery locations and add them to the dictionary
-        for battery in grid.batteries:
+        for battery in new_grid.batteries:
             battery_locations.add(battery.pos_x_y)
-        experiment_dict[grid.costs] = battery_locations
+        experiment_dict[new_grid.costs] = battery_locations
 
         # add the dictionary as a nested dictionary to the results dictionary
         results[experiment] = experiment_dict

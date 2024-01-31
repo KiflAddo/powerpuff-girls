@@ -25,7 +25,7 @@ class Hill_Climber():
         self.all_costs = []
         self.iterations_list = []
 
-    def run(self, N=10000):
+    def climb(self, N=10000):
         '''
         This function chooses a random house-battery connection and places the cable in a different way,
         thus it runs the hill_climber algorithm
@@ -165,3 +165,17 @@ class Hill_Climber():
         plt.title('Hill-Climber', fontsize=20)
         plt.savefig(output_file)
         plt.show()
+
+    def run(self, visualize=False, output=False):
+        '''
+        Function that runs the algorithm
+        '''
+
+        self.climb()
+
+        if visualize == True:
+            self.grid.setup_plot()
+            self.grid.visualize()
+
+        if output == True:
+            self.grid.output()
