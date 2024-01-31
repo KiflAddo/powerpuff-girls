@@ -12,7 +12,7 @@ self.cost = self.batteries * 5000 + total_lenghth * 9
 self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 ```
 
-### Indeling repository
+## Indeling repository
 
 - `classes`:            Hierin staan alle classes en algoritmen
 - `figures`:            Hier worden alle plots van visualize cost opgeslagen EN OOK DIE VAN HILLCLIMBER COST DECREASE
@@ -34,7 +34,7 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 
    Deze functie returnt niks.
 
-### functies
+## functies
 
 - `access_data.py`:     Leest de csv met info voor de grid
 - `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
@@ -73,7 +73,7 @@ run_algorithm(Hill_Climber, 1, visualize=True)
 ```
 
 
-### Classes
+## Classes
 In classes staan alle classes en algoritmen.
 
 De eenvoudige classes zijn:
