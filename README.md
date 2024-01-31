@@ -25,6 +25,9 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 
 #### `main.py`
 Je runt de Main door in je terminal `python main.py` te typen.
+``` python
+Nu kan je ook python code typen
+```
 
 `main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
 
