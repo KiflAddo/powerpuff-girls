@@ -17,6 +17,7 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 - `classes`:            Hierin staan alle classes en algoritmen
 - `figures`:            Hier worden alle plots van visualize cost opgeslagen EN OOK DIE VAN HILLCLIMBER COST DECREASE
 - `huizen_batterijen`:  De data van de grids waarmee we werken
+- `access_data.py`:     Leest de csv met info voor de grid
 - `main.py`:            Hier roep je alle functies en de verschillende algoritmen aan
 - `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
