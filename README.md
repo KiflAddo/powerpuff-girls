@@ -63,8 +63,11 @@ De output van experiments is een csv file, `results.csv` met kosten voor elk gri
 De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
 - `results.csv`: Een csv, de output van experiments
 - `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
+``` python
+visualize_cost('results.csv', 'figures/district_3_kmeans.png')
+```
 
-#### `run_all.py'
+#### `run_all.py`
 ``` python
 run_algorithm(Hill_Climber, 1, visualize=True)
 ```
