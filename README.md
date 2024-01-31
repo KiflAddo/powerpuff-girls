@@ -41,8 +41,11 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
 - `run_all.py`: Met deze functie kies je makkelijk een algoritme om te runnen en of je het grid wil plotten
 
-
-De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
+#### `access_data.py`
+```python
+access_data('huizen_batterijen/district_3/district-3_houses.csv')
+```
+access_data leest de csv met info voor de grid uit een path
 
 #### `experiment.py`
 ``` python
