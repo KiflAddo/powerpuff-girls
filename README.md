@@ -49,7 +49,7 @@ access_data leest de csv met info voor de grid uit een path
 
 #### `experiment.py`
 ``` python
-    experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
+experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
 ```
 De experiment() functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
@@ -71,6 +71,7 @@ De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de koste
 ``` python
 run_algorithm(Hill_Climber, 1, visualize=True)
 ```
+
 
 
 ## Classes
