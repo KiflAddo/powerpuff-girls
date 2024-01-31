@@ -8,7 +8,12 @@ import numpy as np
 from collections import Counter
 
 class Grid_kmeans():
-    '''Grid with houses and cables as dict. Batteries will be put in a list'''
+    '''
+    This class takes two data files, one containing information about houses 
+    and one containing information about batteries, and makes each item an
+    object. It visualizes these objects in a grid. This class keeps track of the
+    grid and all the changes made in the grid with the use of the algorithms.
+    '''
 
     def __init__(self, house_data, battery_data):
         self.house_data = house_data
@@ -29,7 +34,6 @@ class Grid_kmeans():
         Get the coordinate and capacity of the house
         save the house with it's cable in a the houses_and_cables dict
         '''
-
         for house in self.house_data:
             split_data = house.split(',')
             pos_x = int(split_data[0])
@@ -47,7 +51,6 @@ class Grid_kmeans():
         Creates a numpy array of the house coordinates which is used for
         the kmeans() function
         '''
-
         arr = []
 
         # Loop over houses
@@ -64,7 +67,6 @@ class Grid_kmeans():
         '''
         Get the coordinate and capacity of the battery
         '''
-
         # Loop over the rows in the array containing the battery positions
         for (x, y) in self.batt_loc[0]:
             pos_x = x
@@ -82,7 +84,6 @@ class Grid_kmeans():
         '''
         Function to calculate the costs
         '''
-
         total_shared_cables = 0
         for battery in self.shared_segments:
             flatten = sum(self.shared_segments[battery], [])
@@ -115,7 +116,6 @@ class Grid_kmeans():
         Plots the houses as blue squares, the batteries as red circles and
         the cables connecting the two as green lines
         '''
-
         # Plot houses and batteries
         self.plot_houses()
         self.plot_batteries()
@@ -167,7 +167,6 @@ class Grid_kmeans():
         '''
         Plots the houses
         '''
-
         x_pos_list = []
         y_pos_list = []
 
@@ -182,7 +181,6 @@ class Grid_kmeans():
         '''
         Plots the batteries
         '''
-
         x_pos_list_bat = []
         y_pos_list_bat = []
         colour_bat = []
@@ -201,7 +199,6 @@ class Grid_kmeans():
         '''
         Sets up the plot
         '''
-
         self.fig, self.ax1 = plt.subplots(1)
         self.ax1.set_aspect('equal', adjustable='box')
 
@@ -217,7 +214,6 @@ class Grid_kmeans():
         '''
         Creates an output and pretty prints it
         '''
-
         true_data = []
         dict = {"district": 1, "costs-shared": self.costs}
 
@@ -282,6 +278,5 @@ class Grid_kmeans():
         Clears battery objects when the houses need to be connected to different
         batteries
         '''
-
         for battery in self.batteries:
             battery.used_capacity = 0
