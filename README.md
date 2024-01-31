@@ -12,41 +12,69 @@ self.cost = self.batteries * 5000 + total_lenghth * 9
 self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 ```
 
-### Indeling repository
+## Indeling repository
 
 - `classes`:            Hierin staan alle classes en algoritmen
 - `figures`:            Hier worden alle plots van visualize cost opgeslagen EN OOK DIE VAN HILLCLIMBER COST DECREASE
+- `functies`:           Hierin staan alle functies die `main.py` nodig heeft
 - `huizen_batterijen`:  De data van de grids waarmee we werken
-- `access_data.py`:     Leest de csv met info voor de grid
 - `main.py`:            Hier roep je alle functies en de verschillende algoritmen aan
-- `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
-- `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
 - `results.csv`:        Hier worden de kosten die uit ecperiment komen opgeslagen.
 
 #### `main.py`
-Je runt de Main door in je terminal `python main.py` te typen.
-``` python
-Nu kan je ook python code typen
-```
+  Je runt de Main door in je terminal `python main.py` te typen.
 
-`main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
+
+In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste functie is de 'run_algorithm' functie.  Deze krijgt de volgende parameters mee:
+- `algorithm`: Met deze parameter kies je welk algoritme je wilt runnen. Je hebt de keuze uit Greedy_Random, Greedy_Random_kmeans en Hill_Climber
+- `district`: Keuze uit de verschillende districten. Dit kan dus 1, 2, of 3 zijn.
+- `visualize`: Boolean die, wanneer hij op True staat, De grid visualiseert
+- `output`: Boolean die, wanneer hij op True staat, de output print
+- `experiment`: Dit parameter hoeft niet aangepast te worden, het is puur zodat we deze functie in experiment() kunnen runnen.
+
+   Deze functie returnt niks.
+
+## functies
+
+- `access_data.py`:     Leest de csv met info voor de grid
+- `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
+- `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
+- `run_all.py`: Met deze functie kies je makkelijk een algoritme om te runnen, het bijbehorende grid plotten en de output printen
+
+#### `access_data.py`
+```python
+access_data('huizen_batterijen/district_3/district-3_houses.csv')
+```
+access_data leest de csv met info voor de grid uit een path
 
 #### `experiment.py`
-De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
+``` python
+experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
+```
+De experiment() functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
-- `algoritme`: Keuze uit de twee algoritmen: Greedy_Random of Greedy_Random_kmeans, zelf invullen
-- `houses`: De informatie van de huizen
-- `batteries`: De informatie van de batterijen
+- `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
+- `District` : Keuze tussen de 3 districten die je kan gebruiken. Input kan dus 1, 2 of 3 zijn
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
 
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
 
 #### `visualize_cost.py` 
-De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
+``` python
+visualize_cost('results.csv', 'figures/district_3_kmeans.png')
+```
+De `visualize_cost()` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
 - `results.csv`: Een csv, de output van experiments
 - `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
 
-### Classes
+
+#### `run_all.py`
+``` python
+run_algorithm(Hill_Climber, 1, visualize=True)
+```
+Met de run_algorithm functie kan je kiezen welk algoritme je wilt runnen in combinatie met welk district. Vervolgens kan je ook kiezen of je de bijbehorende grid wilt visualizen en of je de output van deze grid wild printen. 
+
+## Classes
 In classes staan alle classes en algoritmen.
 
 De eenvoudige classes zijn:
@@ -54,7 +82,7 @@ De eenvoudige classes zijn:
 - `Battery`: Krijgt `pos_x`, `pos_y`, `capacity` mee en heeft ook een `used_capacity` die op 0 staat aan het begin.
 - `Cables`: Kan een lijst aan coordinaten opslaan. Dit is een kabel
 - `Grid`: Grid simuleert een heel aangelegd grid van kabel batterijen en huizen. Deze grid wordt gebruikt voor ons `greedy_random` algoritme
-- `Grid_k_means`: Een aangepaste grid voor het algoritme kmeansdie een numpy array maakt van de huiscoordinaten. 
+- `Grid_k_means`: Een aangepaste grid voor het algoritme `greedy_random_k_means`. Hij inherit grid en voegt een fucntie toe die een numpy array maakt van de huiscoordinaten.
 
 ### Algoritmen:
 #### `greedy_random`: 
