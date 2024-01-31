@@ -22,12 +22,12 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
 - `results.csv`:        Hier worden de kosten die uit ecperiment komen opgeslagen.
 
-### `main.py`
+#### `main.py`
 Je runt de Main door in je terminal `python main.py` te typen.
 
 `main.py` gebruikt de functie `access_data()` om de csv files met de informatie over de huizen batterijen in te lezen, en slaat deze op in de variabelen `batteries` en `houses`. 
 
-### `experiment.py`
+#### `experiment.py`
 De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende parameters meegegeven:
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
 - `algoritme`: Keuze uit de twee algoritmen: Greedy_Random of Greedy_Random_kmeans, zelf invullen
@@ -37,7 +37,7 @@ De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende pa
 
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
 
-### `visualize_cost.py` 
+#### `visualize_cost.py` 
 De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
 - `results.csv`: Een csv, de output van experiments
 - `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
@@ -52,12 +52,12 @@ De eenvoudige classes zijn:
 - `Grid`: Grid simuleert een heel aangelegd grid van kabel batterijen en huizen. Deze grid wordt gebruikt voor ons `greedy_random` algoritme
 - `Grid_k_means`: Een aangepaste grid voor het algoritme kmeansdie een numpy array maakt van de huiscoordinaten. 
 
-#### Algoritmen:
-`greedy_random`:
+### Algoritmen:
+#### `greedy_random`: Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. Het berekend eerst welke batterij de kleinste Manhattan distance heeft van de huizen. Deze huizen worden met die huizen verbonden zo lang de capaciteit van de batterij niet oeverschreden wordt. Omdat de huizen niet met random batterijen verbonden worden maar met de dihtstbijzijnde batterij met voldoende capaciteit is het greedy. De stappen die de kabel legt zijn elke stap random in de x of de y richting totdat de batterij bereikt is.
 
-`greedy_random_k_means`:
+#### `greedy_random_k_means`: Dit constructieve algoritme neemt een grid en legt een kabel in random stappen neer. In dit algoritme moeten de locaties van de batterij nog gekozen worden. Hiervoor gebruiken we een heuristiek. Deze gaat er van uit dat huizen die dicht bij elkaar liggen zo veel mogelijk aan dezelfde batterij verbonden worden om kabelkosten per segment te besparen. De huizen worden door K-Means in clusters opgedeeld die volgens de euclidische afstand het dichtst bij elkaar liggen. De batterijen liggen nu midden in deze clusters. Hierna wordt greedy_random gebruikt om de batterijen met de kortste Manhatten_distance van de huizen aan deze huizen te verbinden met kabels.
 
-`hill_climber`:
+#### `hill_climber`: Dit iteratieve algoritme krijgt als input een grid en probeert de kosten te verlagen van dit grid. Het doet een aantal iteraties. Bij elke iteratie pakt het een random kabel en legt deze opnieuw aan. Als dit leid tot kostenverlaging wordt de oude kabel vervangen met deze betere kabel.
 
 
 
