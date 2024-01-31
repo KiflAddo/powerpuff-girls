@@ -24,17 +24,20 @@ self.cost = self.batteries * 5000 + (total_length - total_shared_cables) * 9
 - `results.csv`:        Hier worden de kosten die uit ecperiment komen opgeslagen.
 
 #### `main.py`
-Je runt de Main door in je terminal `python main.py` te typen.
-``` python
-Nu kan je ook python code typen
-```
+  Je runt de Main door in je terminal `python main.py` te typen.
 
-In de main.py zijn er twee functies doe aangeroepen kunnen worden. De eerste functie is de 'run_algorithm' functie.  Deze krijgt de volgende parameters mee:
+
+In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste functie is de 'run_algorithm' functie.  Deze krijgt de volgende parameters mee:
 - `algorithm`: Met deze parameter kies je welk algoritme je wilt runnen. Je hebt de keuze uit Greedy_Random, Greedy_Random_kmeans en Hill_Climber
 - `district`: Keuze uit de verschillende districten. Dit kan dus 1, 2, of 3 zijn.
 - `visualize`: Boolean die, wanneer hij op True staat, De grid visualiseert
 - `output`: Boolean die, wanneer hij op True staat, de output print
 - `experiment`: Dit parameter hoeft niet aangepast te worden, het is puur zodat we deze functie in experiment kunnen runnen.
+  Deze functie returnt niks.
+Een voorbeeld van run_algorithm:
+``` python
+run_algorithm(Hill_Climber, 1, visualize=True)
+```
 
 De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
 
@@ -43,6 +46,11 @@ De `experiment.py` functie wordt aangeroepen in de main en krijgt de volgende pa
 - `iteraties`: Deze kun je zelf bepalen door het getal aan te passen als je de experiment functie aanroept
 - `algoritme`: Keuze uit de drie algoritmen: Greedy_Random, Greedy_Random_kmeans, en Hill_Climber
 - `file_name`: Welke naam je het bestand wilt geven, in de vorm van een string.
+  Deze functie returnt niks.
+  Een voorbeeld van experiment:
+``` python
+    experiments(10, Greedy_Random_kmeans, 1, 'results.csv')
+```
 
 De output van experiments is een csv file, `results.csv` met kosten voor elk grid. Deze csv wordt gebruikt als input voor `visualise_cost.py`
 
