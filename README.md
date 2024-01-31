@@ -35,15 +35,12 @@ In de main.py zijn er twee functies die aangeroepen kunnen worden. De eerste fun
    Deze functie returnt niks.
 
 ### functies
-- `run_all.py`: runt alle functies
+
 - `access_data.py`:     Leest de csv met info voor de grid
 - `experiment.py`:      Functie die een aantal experimenten runt om een kostenverdeling csv te produceren
 - `visualize_cost.py`:  Functie die de kosten visualiseert van een aantal experimenten gebruikmakend van de csv van experiment.py
+- `run_all.py`: Met deze functie kies je makkelijk een algoritme om te runnen en of je het grid wil plotten
 
-
-``` python
-run_algorithm(Hill_Climber, 1, visualize=True)
-```
 
 De volgende functie die kan aangeroepen worden is de experiment functie. Zie hiervoor het experiment kopje.
 
@@ -66,6 +63,12 @@ De output van experiments is een csv file, `results.csv` met kosten voor elk gri
 De `visualize_cost.py` functie wordt gebruikt voor het visualiseren van de kostenspreiding van meerdere grids met hetzelfde algoritme. De input parameters zijn:
 - `results.csv`: Een csv, de output van experiments
 - `pathname.png`: Een png, deze wordt opgeslagen in het pad dat je aangeeft. Wij slaan alles op in `figures`. Dit moet je zelf specificeren
+
+#### `run_all.py'
+``` python
+run_algorithm(Hill_Climber, 1, visualize=True)
+```
+
 
 ### Classes
 In classes staan alle classes en algoritmen.
